@@ -23,54 +23,28 @@
       icons: ["https://yourgameurl.com/icon.png"]
     };
 
-    const ethereumClient = new window.EthereumClient(window.w3mProvider({ projectId, chains }), chains);
-
-    const web3Modal = new window.Web3Modal.default(
-      {
-        projectId,
-        themeMode: "light",
-        themeColor: "purple",
-        metadata
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: projectId,
+        }
       },
-      ethereumClient
-    );
+      // Add other providers if needed
+    };
 
-    // --- Contract Info ---
-    const CONTRACT_ADDRESS = "0x7eFC729a41FC7073dE028712b0FB3950F735f9ca";
-    const CONTRACT_ABI = [
-      {
-        inputs: [],
-        name: "mintPrize",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function"
-      }
-    ];
+    const web3Modal = new Web3Modal({
+      cacheProvider: true,
+      providerOptions,
+      theme: "light",
+      themeColor: "purple",
+      metadata
+    });
 
     // --- Wallet Connection ---
     window.connectWallet = async function () {
       try {
-        await web3Modal.openModal();
-
-        const provider = await new Promise((resolve, reject) => {
-          const checkInterval = setInterval(() => {
-            const p = ethereumClient.getProvider();
-            if (p) {
-              clearInterval(checkInterval);
-              resolve(p);
-            }
-          }, 300);
-          setTimeout(() => {
-            clearInterval(checkInterval);
-            reject(new Error("Wallet connection timed out."));
-          }, 15000);
-        });
-
-        if (!provider.request) {
-          alert("Provider not initialized correctly.");
-          return null;
-        }
-
+        const provider = await web3Modal.connect();
         const web3Provider = new ethers.providers.Web3Provider(provider);
         const signer = web3Provider.getSigner();
         const address = await signer.getAddress();
@@ -90,7 +64,18 @@
       if (!wallet) return;
 
       try {
-        const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, wallet.signer);
+        const contract = new ethers.Contract("0x7eFC729a41FC7073dE028712b0FB3950F735f9ca", 
+          [
+            {
+              inputs: [],
+              name: "mintPrize",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function"
+            }
+          ],
+          wallet.signer
+        );
         const tx = await contract.mintPrize();
         await tx.wait();
         alert("🎉 NFT Minted Successfully!");
