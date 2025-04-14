@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive NFT</title>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+    canvas {
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+<script>
+  const config = {
+    type: Phaser.AUTO,
+    width: 400,
+    height: 400,
+    backgroundColor: '#111111',
+    scene: {
+      preload,
+      create,
+      update
+    },
+    scale: {
+      mode: Phaser.Scale.FIT,
+      autoCenter: Phaser.Scale.CENTER_BOTH
+    },
+    physics: {
+      default: 'arcade',
+      arcade: { debug: false }
+    }
+  };
+
+  const game = new Phaser.Game(config);
+
+  let player, cursors, isActive = false;
+
+  function preload() {
+    const g = this.add.graphics();
+    g.fillStyle(0xffffff, 1);
+    g.fillRect(0, 0, 32, 32);
+    g.generateTexture('player', 32, 32);
+    g.destroy();
+  }
+
+  function create() {
+    player = this.physics.add.sprite(200, 200, 'player');
+    player.setCollideWorldBounds(true);
+    player.setVisible(false);
+
+    cursors = this.input.keyboard.createCursorKeys();
+
+    // Hover in
+    this.input.on('pointerover', () => {
+      isActive = true;
+      player.setVisible(true);
+    });
+
+    // Hover out
+    this.input.on('pointerout', () => {
+      isActive = false;
+      player.setVisible(false);
+    });
+
+    // Touch begin
+    this.input.on('pointerdown', pointer => {
+      isActive = true;
+      player.setVisible(true);
+      player.x = pointer.x;
+      player.y = pointer.y;
+    });
+
+    // Touch drag
+    this.input.on('pointermove', pointer => {
+      if (pointer.isDown && isActive) {
+        player.x = pointer.x;
+        player.y = pointer.y;
+      }
+    });
+
+    // Touch end
+    this.input.on('pointerup', () => {
+      isActive = false;
+      player.setVisible(false);
+    });
+  }
+
+  function update() {
+    if (!isActive) return;
+
+    const speed = 4 * 60; // px/sec
+    player.setVelocity(0);
+
+    if (cursors.left.isDown) player.setVelocityX(-speed);
+    else if (cursors.right.isDown) player.setVelocityX(speed);
+
+    if (cursors.up.isDown) player.setVelocityY(-speed);
+    else if (cursors.down.isDown) player.setVelocityY(speed);
+  }
+</script>
+</body>
+</html>
