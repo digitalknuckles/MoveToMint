@@ -40,42 +40,45 @@
     let collectedCount = 0;
 
     function preload() {
-      // Placeholder player sprite: a white square 32x32
-      this.graphics = this.add.graphics();
-      this.graphics.fillStyle(0xffffff, 1);
-      this.graphics.fillRect(0, 0, 32, 32);
-      this.graphics.generateTexture('player', 32, 32);
-
-      // Placeholder item sprite: a red square 16x16
-      this.graphics.clear();
-      this.graphics.fillStyle(0xff0000, 1);
-      this.graphics.fillRect(0, 0, 16, 16);
-      this.graphics.generateTexture('item', 16, 16);
-
-      // Icon for UI tracker
-      this.graphics.clear();
-      this.graphics.fillStyle(0x00ff00, 1);
-      this.graphics.fillRect(0, 0, 16, 16);
-      this.graphics.generateTexture('icon', 16, 16);
-
-      this.graphics.destroy();
+      // Preload would normally load external assets, but we're generating textures in create()
     }
 
     function create() {
+      // Create placeholder graphics as textures
+      const graphics = this.add.graphics();
+
+      graphics.fillStyle(0xffffff, 1);
+      graphics.fillRect(0, 0, 32, 32);
+      graphics.generateTexture('player', 32, 32);
+
+      graphics.clear();
+      graphics.fillStyle(0xff0000, 1);
+      graphics.fillRect(0, 0, 16, 16);
+      graphics.generateTexture('item', 16, 16);
+
+      graphics.clear();
+      graphics.fillStyle(0x00ff00, 1);
+      graphics.fillRect(0, 0, 16, 16);
+      graphics.generateTexture('icon', 16, 16);
+
+      graphics.destroy();
+
+      // Spawn the player
       player = this.physics.add.sprite(200, 200, 'player');
       player.setCollideWorldBounds(true);
-      player.setVisible(true);
 
-      // Spawn 3 collectible items at random positions
+      // Create items
       items = this.physics.add.group();
       for (let i = 0; i < 3; i++) {
         let x = Phaser.Math.Between(50, 350);
         let y = Phaser.Math.Between(50, 350);
-        let item = items.create(x, y, 'item');
+        items.create(x, y, 'item');
       }
 
+      // Collision detection
       this.physics.add.overlap(player, items, collectItem, null, this);
 
+      // Input listener
       this.input.on('pointerdown', pointer => {
         targetPosition = new Phaser.Math.Vector2(pointer.x, pointer.y);
       });
@@ -104,6 +107,15 @@
       icon.setOrigin(0, 0);
       collectedIcons.push(icon);
       collectedCount++;
+
+      // Check if all items are collected
+      if (collectedCount === 3) {
+        const victoryObject = game.scene.scenes[0].add.image(350, 350, 'item').setScrollFactor(0).setInteractive();
+        victoryObject.on('pointerdown', () => {
+          alert('Victory! All items collected!');
+          // Call the wallet connect function or any other victory-related logic here
+        });
+      }
     }
   </script>
 </body>
