@@ -49,7 +49,7 @@
       }
     };
 
-    // Define mintPrizeNFT function outside any specific scope
+    // Define mintPrizeNFT function before using it
     window.mintPrizeNFT = async function () {
       const wallet = await window.connectWallet();
       if (!wallet) return;
