@@ -6,6 +6,7 @@
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.6.6/dist/umd/index.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.7/dist/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.umd.min.js"></script>
   <style>
     body { margin: 0; padding: 0; overflow: hidden; }
     canvas { display: block; margin: auto; }
@@ -38,25 +39,28 @@
     let items;
     let collectedIcons = [];
     let targetPosition = null;
-    const speed = 4 * 60; // Phaser uses pixels/second
+    const speed = 4 * 60; // pixels per second
     let collectedCount = 0;
 
     function preload() {
-      // Placeholder player sprite and item sprite creation is handled in create() method.
+      // Placeholder graphics created in create()
     }
 
     function create() {
       const graphics = this.add.graphics();
 
+      // Player placeholder
       graphics.fillStyle(0xffffff, 1);
       graphics.fillRect(0, 0, 32, 32);
       graphics.generateTexture('player', 32, 32);
 
+      // Item placeholder
       graphics.clear();
       graphics.fillStyle(0xff0000, 1);
       graphics.fillRect(0, 0, 16, 16);
       graphics.generateTexture('item', 16, 16);
 
+      // Icon placeholder
       graphics.clear();
       graphics.fillStyle(0x00ff00, 1);
       graphics.fillRect(0, 0, 16, 16);
@@ -69,8 +73,8 @@
 
       items = this.physics.add.group();
       for (let i = 0; i < 3; i++) {
-        let x = Phaser.Math.Between(50, 350);
-        let y = Phaser.Math.Between(50, 350);
+        const x = Phaser.Math.Between(50, 350);
+        const y = Phaser.Math.Between(50, 350);
         items.create(x, y, 'item');
       }
 
@@ -81,7 +85,7 @@
       });
     }
 
-    function update(time, delta) {
+    function update() {
       player.setVelocity(0);
 
       if (targetPosition) {
@@ -100,50 +104,45 @@
 
     function collectItem(player, item) {
       item.destroy();
-      const icon = game.scene.scenes[0].add.image(10 + collectedCount * 18, 10, 'icon').setScrollFactor(0);
-      icon.setOrigin(0, 0);
+
+      const icon = game.scene.scenes[0].add.image(10 + collectedCount * 18, 10, 'icon').setScrollFactor(0).setOrigin(0, 0);
       collectedIcons.push(icon);
       collectedCount++;
 
       if (collectedCount === 3) {
         const victoryObject = game.scene.scenes[0].add.image(350, 350, 'item').setScrollFactor(0).setInteractive();
+
         victoryObject.on('pointerdown', () => {
-          alert('Victory! All items collected!');
-          mintPrizeNFT(); // Call the mint function when the player clicks the victory object
+          alert('🎉 Victory! All items collected!');
+          window.mintPrizeNFT(); // ✅ Now correctly references the global function
         });
       }
     }
 
-    // --- WalletConnect & Web3Modal Configuration ---
-    const projectId = "15da3c431a74b29edb63198a503d45b5"; // Replace with your WalletConnect Project ID
+    // --- Web3 / WalletConnect Setup ---
 
-    const chains = [
-      { id: 1, name: "Ethereum", rpcUrls: ["https://rpc.ankr.com/eth"] },
-      { id: 137, name: "Polygon", rpcUrls: ["https://polygon-rpc.com"] }
-    ];
+    const projectId = "15da3c431a74b29edb63198a503d45b5"; // Your WalletConnect project ID
 
     const metadata = {
       name: "FunFart Grab",
       description: "Mint NFTs after winning the game!",
-      url: "https://yourgameurl.com",
-      icons: ["https://yourgameurl.com/icon.png"]
+      url: "https://digitalknuckles.github.io/MoveToMint/",
+      icons: ["https://digitalknuckles.github.io/MoveToMint/icon.png"]
     };
 
     const providerOptions = {
       walletconnect: {
         package: WalletConnectProvider,
         options: {
-          infuraId: projectId,
+          infuraId: projectId
         }
-      },
-      // Add other providers if needed
+      }
     };
 
     const web3Modal = new Web3Modal({
       cacheProvider: true,
-      providerOptions, 
+      providerOptions,
       theme: "light",
-      themeColor: "purple",
       metadata
     });
 
@@ -156,7 +155,7 @@
         console.log("🔌 Wallet connected:", address);
         return { provider: web3Provider, signer, address };
       } catch (err) {
-        console.error("❌ Connection failed:", err);
+        console.error("❌ Wallet connection failed:", err);
         alert("❌ Failed to connect wallet: " + (err.message || err));
         return null;
       }
@@ -168,7 +167,7 @@
 
       try {
         const contract = new ethers.Contract(
-          "0x7eFC729a41FC7073dE028712b0FB3950F735f9ca", // Replace with your contract address
+          "0x7eFC729a41FC7073dE028712b0FB3950F735f9ca", // Your contract address
           [
             {
               inputs: [],
@@ -185,7 +184,7 @@
         await tx.wait();
         alert("🎉 NFT Minted Successfully!");
       } catch (err) {
-        console.error("❌ Minting error:", err);
+        console.error("❌ Minting failed:", err);
         alert("❌ Minting failed: " + (err.reason || err.message || err));
       }
     };
