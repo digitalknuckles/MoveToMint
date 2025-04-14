@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive NFT Game</title>
+  <title>Interactive NFT - Player Control</title>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.6.6/dist/umd/index.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.7/dist/index.min.js"></script>
@@ -14,70 +13,6 @@
 </head>
 <body>
   <script>
-    // Initialize Web3Modal and WalletConnect
-    const projectId = "15da3c431a74b29edb63198a503d45b5"; // Replace with your WalletConnect Project ID
-
-    const providerOptions = {
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-          infuraId: projectId,
-        }
-      },
-      // Add other providers if needed
-    };
-
-    const web3Modal = new Web3Modal({
-      cacheProvider: true, // Cache the provider
-      providerOptions,     // Wallet options
-      theme: "light",      // Theme color (optional)
-      themeColor: "purple",// Theme color (optional)
-    });
-
-    window.connectWallet = async function () {
-      try {
-        const provider = await web3Modal.connect(); // Connect to wallet using Web3Modal
-        const web3Provider = new ethers.providers.Web3Provider(provider);
-        const signer = web3Provider.getSigner();
-        const address = await signer.getAddress();
-        console.log("🔌 Wallet connected:", address);
-        return { provider: web3Provider, signer, address };
-      } catch (err) {
-        console.error("❌ Connection failed:", err);
-        alert("❌ Failed to connect wallet: " + (err.message || err));
-        return null;
-      }
-    };
-
-    // Define mintPrizeNFT function before using it
-    window.mintPrizeNFT = async function () {
-      const wallet = await window.connectWallet();
-      if (!wallet) return;
-
-      try {
-        const contract = new ethers.Contract(
-          "0x7eFC729a41FC7073dE028712b0FB3950F735f9ca", // Replace with your contract address
-          [
-            {
-              inputs: [],
-              name: "mintPrize",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function"
-            }
-          ],
-          wallet.signer
-        );
-
-        const tx = await contract.mintPrize();
-        await tx.wait();
-        alert("🎉 NFT Minted Successfully!");
-      } catch (err) {
-        console.error("❌ Minting error:", err);
-        alert("❌ Minting failed: " + (err.reason || err.message || err));
-      }
-    };
-
     const config = {
       type: Phaser.AUTO,
       width: 400,
@@ -107,6 +42,10 @@
     let collectedCount = 0;
 
     function preload() {
+      // Placeholder player sprite and item sprite creation is handled in create() method.
+    }
+
+    function create() {
       const graphics = this.add.graphics();
 
       graphics.fillStyle(0xffffff, 1);
@@ -142,10 +81,6 @@
       });
     }
 
-    function create() {
-      // Add your game objects here
-    }
-
     function update(time, delta) {
       player.setVelocity(0);
 
@@ -174,11 +109,86 @@
         const victoryObject = game.scene.scenes[0].add.image(350, 350, 'item').setScrollFactor(0).setInteractive();
         victoryObject.on('pointerdown', () => {
           alert('Victory! All items collected!');
-          mintPrizeNFT(); // Now mintPrizeNFT should be defined here
+          mintPrizeNFT(); // Call the mint function when the player clicks the victory object
         });
       }
     }
 
+    // --- WalletConnect & Web3Modal Configuration ---
+    const projectId = "15da3c431a74b29edb63198a503d45b5"; // Replace with your WalletConnect Project ID
+
+    const chains = [
+      { id: 1, name: "Ethereum", rpcUrls: ["https://rpc.ankr.com/eth"] },
+      { id: 137, name: "Polygon", rpcUrls: ["https://polygon-rpc.com"] }
+    ];
+
+    const metadata = {
+      name: "FunFart Grab",
+      description: "Mint NFTs after winning the game!",
+      url: "https://yourgameurl.com",
+      icons: ["https://yourgameurl.com/icon.png"]
+    };
+
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: projectId,
+        }
+      },
+      // Add other providers if needed
+    };
+
+    const web3Modal = new Web3Modal({
+      cacheProvider: true,
+      providerOptions, 
+      theme: "light",
+      themeColor: "purple",
+      metadata
+    });
+
+    window.connectWallet = async function () {
+      try {
+        const provider = await web3Modal.connect();
+        const web3Provider = new ethers.providers.Web3Provider(provider);
+        const signer = web3Provider.getSigner();
+        const address = await signer.getAddress();
+        console.log("🔌 Wallet connected:", address);
+        return { provider: web3Provider, signer, address };
+      } catch (err) {
+        console.error("❌ Connection failed:", err);
+        alert("❌ Failed to connect wallet: " + (err.message || err));
+        return null;
+      }
+    };
+
+    window.mintPrizeNFT = async function () {
+      const wallet = await window.connectWallet();
+      if (!wallet) return;
+
+      try {
+        const contract = new ethers.Contract(
+          "0x7eFC729a41FC7073dE028712b0FB3950F735f9ca", // Replace with your contract address
+          [
+            {
+              inputs: [],
+              name: "mintPrize",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function"
+            }
+          ],
+          wallet.signer
+        );
+
+        const tx = await contract.mintPrize();
+        await tx.wait();
+        alert("🎉 NFT Minted Successfully!");
+      } catch (err) {
+        console.error("❌ Minting error:", err);
+        alert("❌ Minting failed: " + (err.reason || err.message || err));
+      }
+    };
   </script>
 </body>
 </html>
