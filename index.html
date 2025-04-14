@@ -2,192 +2,19 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Interactive NFT - Player Control</title>
+  <title>FunFart Grab NFT Game</title>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.6.6/dist/umd/index.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.7/dist/index.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.umd.min.js"></script>
   <style>
-    body { margin: 0; padding: 0; overflow: hidden; }
+    body { margin: 0; padding: 0; overflow: hidden; background: #1e1e1e; }
     canvas { display: block; margin: auto; }
   </style>
 </head>
 <body>
-  <script>
-    const config = {
-      type: Phaser.AUTO,
-      width: 400,
-      height: 400,
-      backgroundColor: '#1e1e1e',
-      parent: 'game-container',
-      scene: {
-        preload: preload,
-        create: create,
-        update: update
-      },
-      physics: {
-        default: 'arcade',
-        arcade: {
-          debug: false
-        }
-      }
-    };
-
-    const game = new Phaser.Game(config);
-
-    let player;
-    let items;
-    let collectedIcons = [];
-    let targetPosition = null;
-    const speed = 4 * 60; // pixels per second
-    let collectedCount = 0;
-
-    function preload() {
-      // Placeholder graphics created in create()
-    }
-
-    function create() {
-      const graphics = this.add.graphics();
-
-      // Player placeholder
-      graphics.fillStyle(0xffffff, 1);
-      graphics.fillRect(0, 0, 32, 32);
-      graphics.generateTexture('player', 32, 32);
-
-      // Item placeholder
-      graphics.clear();
-      graphics.fillStyle(0xff0000, 1);
-      graphics.fillRect(0, 0, 16, 16);
-      graphics.generateTexture('item', 16, 16);
-
-      // Icon placeholder
-      graphics.clear();
-      graphics.fillStyle(0x00ff00, 1);
-      graphics.fillRect(0, 0, 16, 16);
-      graphics.generateTexture('icon', 16, 16);
-
-      graphics.destroy();
-
-      player = this.physics.add.sprite(200, 200, 'player');
-      player.setCollideWorldBounds(true);
-
-      items = this.physics.add.group();
-      for (let i = 0; i < 3; i++) {
-        const x = Phaser.Math.Between(50, 350);
-        const y = Phaser.Math.Between(50, 350);
-        items.create(x, y, 'item');
-      }
-
-      this.physics.add.overlap(player, items, collectItem, null, this);
-
-      this.input.on('pointerdown', pointer => {
-        targetPosition = new Phaser.Math.Vector2(pointer.x, pointer.y);
-      });
-    }
-
-    function update() {
-      player.setVelocity(0);
-
-      if (targetPosition) {
-        const distance = Phaser.Math.Distance.Between(player.x, player.y, targetPosition.x, targetPosition.y);
-
-        if (distance > 4) {
-          this.physics.moveToObject(player, targetPosition, speed);
-        } else {
-          player.setVelocity(0);
-          player.x = targetPosition.x;
-          player.y = targetPosition.y;
-          targetPosition = null;
-        }
-      }
-    }
-
-    function collectItem(player, item) {
-      item.destroy();
-
-      const icon = game.scene.scenes[0].add.image(10 + collectedCount * 18, 10, 'icon').setScrollFactor(0).setOrigin(0, 0);
-      collectedIcons.push(icon);
-      collectedCount++;
-
-      if (collectedCount === 3) {
-        const victoryObject = game.scene.scenes[0].add.image(350, 350, 'item').setScrollFactor(0).setInteractive();
-
-        victoryObject.on('pointerdown', () => {
-          alert('🎉 Victory! All items collected!');
-          window.mintPrizeNFT(); // ✅ Now correctly references the global function
-        });
-      }
-    }
-
-    // --- Web3 / WalletConnect Setup ---
-
-    const projectId = "15da3c431a74b29edb63198a503d45b5"; // Your WalletConnect project ID
-
-    const metadata = {
-      name: "FunFart Grab",
-      description: "Mint NFTs after winning the game!",
-      url: "https://digitalknuckles.github.io/MoveToMint/",
-      icons: ["https://digitalknuckles.github.io/MoveToMint/icon.png"]
-    };
-
-    const providerOptions = {
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-          infuraId: projectId
-        }
-      }
-    };
-
-    const web3Modal = new Web3Modal({
-      cacheProvider: true,
-      providerOptions,
-      theme: "light",
-      metadata
-    });
-
-    window.connectWallet = async function () {
-      try {
-        const provider = await web3Modal.connect();
-        const web3Provider = new ethers.providers.Web3Provider(provider);
-        const signer = web3Provider.getSigner();
-        const address = await signer.getAddress();
-        console.log("🔌 Wallet connected:", address);
-        return { provider: web3Provider, signer, address };
-      } catch (err) {
-        console.error("❌ Wallet connection failed:", err);
-        alert("❌ Failed to connect wallet: " + (err.message || err));
-        return null;
-      }
-    };
-
-    window.mintPrizeNFT = async function () {
-      const wallet = await window.connectWallet();
-      if (!wallet) return;
-
-      try {
-        const contract = new ethers.Contract(
-          "0x7eFC729a41FC7073dE028712b0FB3950F735f9ca", // Your contract address
-          [
-            {
-              inputs: [],
-              name: "mintPrize",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function"
-            }
-          ],
-          wallet.signer
-        );
-
-        const tx = await contract.mintPrize();
-        await tx.wait();
-        alert("🎉 NFT Minted Successfully!");
-      } catch (err) {
-        console.error("❌ Minting failed:", err);
-        alert("❌ Minting failed: " + (err.reason || err.message || err));
-      }
-    };
-  </script>
+  <div id="game-container"></div>
+  <script type="module" src="game.js"></script>
+  <script type="module" src="walletconnect.js"></script>
 </body>
 </html>
