@@ -1,4 +1,5 @@
 // walletconnect.js
+import { ethers } from 'https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js';
 
 const projectId = "15da3c431a74b29edb63198a503d45b5";
 
@@ -46,7 +47,7 @@ window.mintPrizeNFT = async function () {
 
   try {
     const contract = new ethers.Contract(
-      "0x7eFC729a41FC7073dE028712b0FB3950F735f9ca", // Replace with your actual contract
+      "0x7eFC729a41FC7073dE028712b0FB3950F735f9ca",
       [
         {
           inputs: [],
