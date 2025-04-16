@@ -1,29 +1,25 @@
-const projectId = "15da3c431a74b29edb63198a503d45b5";
+const projectId = "15da3c431a74b29edb63198a503d45b5"; // Infura ID if using WalletConnectProvider
 
-const metadata = {
-  name: "FunFart Grab",
-  description: "Mint NFTs after winning the game!",
-  url: "https://digitalknuckles.github.io/MoveToMint/",
-  icons: ["https://digitalknuckles.github.io/MoveToMint/icon.png"]
+const providerOptions = {
+  walletconnect: {
+    package: window.WalletConnectProvider, // ✅ No `.default` here
+    options: {
+      infuraId: projectId, // ✅ Required for WalletConnect v1
+    },
+  },
 };
 
-// Use the global from UMD instead of .default
-const provider = new window.WalletConnectEthereumProvider({
-  projectId,
-  metadata,
-  showQrModal: true,
-  chains: [137], // Polygon Mainnet
-});
-
+// ✅ Web3Modal v1 uses this global
 const web3Modal = new window.Web3Modal({
-  walletProviders: [provider],
-  themeMode: "light",
+  cacheProvider: true,
+  providerOptions,
+  theme: "light",
 });
 
 window.connectWallet = async function () {
   try {
-    const instance = await provider.enable(); // Connects and returns accounts
-    const web3Provider = new ethers.providers.Web3Provider(provider);
+    const instance = await web3Modal.connect(); // ✅ Connect wallet
+    const web3Provider = new ethers.providers.Web3Provider(instance);
     const signer = web3Provider.getSigner();
     const address = await signer.getAddress();
     console.log("🔌 Wallet connected:", address);
@@ -48,8 +44,8 @@ window.mintPrizeNFT = async function () {
           name: "mintPrize",
           outputs: [],
           stateMutability: "nonpayable",
-          type: "function"
-        }
+          type: "function",
+        },
       ],
       wallet.signer
     );
