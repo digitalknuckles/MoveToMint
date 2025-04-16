@@ -72,7 +72,7 @@ function create() {
     const y = Phaser.Math.Between(50, 350);
     const item = items.create(x, y, 'item');
     item.setImmovable(true);
-    item.body.setCircle(8);
+    item.body.setCircle(16);
   }
 
   this.physics.add.overlap(player, items, collectItem, null, this);
