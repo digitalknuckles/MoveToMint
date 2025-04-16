@@ -12,7 +12,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: false // Set to true if you want to visualize hitboxes
     }
   }
 };
@@ -59,11 +59,14 @@ function create() {
   this.anims.create({ key: 'right', frames: [{ key: 'right1' }, { key: 'right2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'idle', frames: [{ key: 'idle1' }, { key: 'idle2' }], frameRate: 2, repeat: -1 });
 
+  // Create items with physics
   items = this.physics.add.group();
   for (let i = 0; i < 3; i++) {
     const x = Phaser.Math.Between(50, 350);
     const y = Phaser.Math.Between(50, 350);
-    items.create(x, y, 'item');
+    const item = items.create(x, y, 'item');
+    item.setImmovable(true);
+    item.body.setCircle(8); // tighter hitbox
   }
 
   this.physics.add.overlap(player, items, collectItem, null, this);
@@ -101,8 +104,7 @@ function update(time, delta) {
       idleTimer = 0;
     } else {
       player.setVelocity(0);
-      player.x = targetPosition.x;
-      player.y = targetPosition.y;
+      // ❗ Removed forced position snap to allow physics overlap to register
       targetPosition = null;
       idleTimer = 0;
     }
