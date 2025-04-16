@@ -56,7 +56,7 @@ function create() {
     .setCollideWorldBounds(true)
     .setDisplaySize(96, 96);
 
-  player.body.setSize(32, 32).setOffset(1, 1); // Adjusted for larger display
+  player.body.setSize(48, 48).setOffset(1, 1); // Adjusted for larger display
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
