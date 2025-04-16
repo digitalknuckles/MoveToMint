@@ -56,7 +56,7 @@ function create() {
     .setCollideWorldBounds(true)
     .setDisplaySize(64, 64);
 
-  player.body.setSize(30, 30).setOffset(1, 1); // Adjusted for larger display
+  player.body.setSize(64, 64).setOffset(1, 1); // Adjusted for larger display
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
@@ -72,7 +72,7 @@ function create() {
     const y = Phaser.Math.Between(50, 350);
     const item = items.create(x, y, 'item');
     item.setImmovable(true);
-    item.body.setCircle(32);
+    item.body.setCircle(16);
   }
 
   this.physics.add.overlap(player, items, collectItem, null, this);
