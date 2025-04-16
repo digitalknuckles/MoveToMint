@@ -1,5 +1,5 @@
 // walletconnect.js
-const projectId = "15da3c431a74b29edb63198a503d45b5";
+const projectId = "15da3c431a74b29edb63198a503d45b5"; // Use your WalletConnect Cloud projectId
 
 const metadata = {
   name: "FunFart Grab",
@@ -10,9 +10,11 @@ const metadata = {
 
 const providerOptions = {
   walletconnect: {
-    package: window.WalletConnectProvider.default,
+    package: window.WalletConnectProvider.default, // Make sure it's injected
     options: {
-      infuraId: projectId
+      projectId: projectId, // Use `projectId`, not `infuraId` for WCv2
+      chains: [137], // Polygon Mainnet
+      metadata
     }
   }
 };
@@ -20,18 +22,32 @@ const providerOptions = {
 const web3Modal = new window.Web3Modal.default({
   cacheProvider: true,
   providerOptions,
-  theme: "light",
-  metadata
+  theme: "light"
 });
+
+// Store current signer and provider
+let currentWallet = {
+  provider: null,
+  signer: null,
+  address: null
+};
 
 window.connectWallet = async function () {
   try {
-    const provider = await web3Modal.connect();
-    const web3Provider = new ethers.providers.Web3Provider(provider);
+    const externalProvider = await web3Modal.connect();
+
+    if (!externalProvider) {
+      throw new Error("No provider returned from Web3Modal");
+    }
+
+    const web3Provider = new ethers.providers.Web3Provider(externalProvider);
     const signer = web3Provider.getSigner();
     const address = await signer.getAddress();
+
+    currentWallet = { provider: web3Provider, signer, address };
+
     console.log("🔌 Wallet connected:", address);
-    return { provider: web3Provider, signer, address };
+    return currentWallet;
   } catch (err) {
     console.error("❌ Wallet connection failed:", err);
     alert("❌ Failed to connect wallet: " + (err.message || err));
@@ -40,12 +56,12 @@ window.connectWallet = async function () {
 };
 
 window.mintPrizeNFT = async function () {
-  const wallet = await window.connectWallet();
+  const wallet = currentWallet.signer ? currentWallet : await window.connectWallet();
   if (!wallet) return;
 
   try {
     const contract = new ethers.Contract(
-      "0x7eFC729a41FC7073dE028712b0FB3950F735f9ca",
+      "0x7eFC729a41FC7073dE028712b0FB3950F735f9ca", // Contract address
       [
         {
           inputs: [],
@@ -59,6 +75,7 @@ window.mintPrizeNFT = async function () {
     );
 
     const tx = await contract.mintPrize();
+    console.log("📤 Mint transaction sent:", tx.hash);
     await tx.wait();
     alert("🎉 NFT Minted Successfully!");
   } catch (err) {
