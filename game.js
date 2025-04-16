@@ -50,7 +50,8 @@ function preload() {
 
 function create() {
   player = this.physics.add.sprite(200, 200, 'idle1').setCollideWorldBounds(true);
-  player.anims.play('idle'); // 👈 Play idle animation on start
+  player.body.setSize(14, 14).setOffset(1, 1); // optional hitbox tuning
+  player.anims.play('idle');
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
@@ -101,24 +102,14 @@ function update(time, delta) {
 
       idleTimer = 0;
     } else {
-      player.setVelocity(0);
-      targetPosition = null;
-      idleTimer = 0;
-
-      // ✅ Stop animation when arrived
-      player.anims.stop();
-
-      // Set appropriate static frame based on last direction
-      const frameMap = {
-        up: 'up1',
-        down: 'down1',
-        left: 'left1',
-        right: 'right1',
-        idle: 'idle1'
-      };
-      player.setTexture(frameMap[lastDirection] || 'idle1');
+      stopPlayerMovement();
     }
   } else {
+    // Hit boundary or no target
+    if (player.body.blocked.left || player.body.blocked.right || player.body.blocked.up || player.body.blocked.down) {
+      stopPlayerMovement();
+    }
+
     idleTimer += delta;
 
     if (idleTimer > 1000 && lastDirection !== 'idle') {
@@ -126,6 +117,26 @@ function update(time, delta) {
       lastDirection = 'idle';
     }
   }
+
+  // ✅ Keep player within bounds (just in case)
+  player.x = Phaser.Math.Clamp(player.x, 0, config.width);
+  player.y = Phaser.Math.Clamp(player.y, 0, config.height);
+}
+
+function stopPlayerMovement() {
+  player.setVelocity(0);
+  targetPosition = null;
+  idleTimer = 0;
+  player.anims.stop();
+
+  const frameMap = {
+    up: 'up1',
+    down: 'down1',
+    left: 'left1',
+    right: 'right1',
+    idle: 'idle1'
+  };
+  player.setTexture(frameMap[lastDirection] || 'idle1');
 }
 
 function collectItem(player, item) {
