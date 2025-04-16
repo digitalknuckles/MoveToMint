@@ -2,7 +2,7 @@ const config = {
   type: Phaser.AUTO,
   width: 400,
   height: 400,
-  backgroundColor: '#1e1e1e',
+  backgroundColor: '#40a2d3',
   parent: 'game-container',
   scene: {
     preload: preload,
