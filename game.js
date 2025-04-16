@@ -29,7 +29,7 @@ let lastDirection = 'idle';
 let idleTimer = 0;
 
 function preload() {
-  this.load.image('background', 'Background_Grey.png');
+  this.load.image('background', 'Background_Grey+.png');
   this.load.image('up1', 'up1.png');
   this.load.image('up2', 'up2.png');
   this.load.image('down1', 'down1.png');
