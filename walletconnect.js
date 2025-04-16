@@ -1,6 +1,4 @@
 // walletconnect.js
-import { ethers } from 'https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js';
-
 const projectId = "15da3c431a74b29edb63198a503d45b5";
 
 const metadata = {
