@@ -12,7 +12,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false // Set to true if you want to visualize hitboxes
+      debug: false
     }
   }
 };
@@ -40,7 +40,6 @@ function preload() {
   this.load.image('idle1', 'idle1.png');
   this.load.image('idle2', 'idle2.png');
 
-  // Placeholder textures
   const graphics = this.add.graphics();
   graphics.fillStyle(0xff0000, 1).fillRect(0, 0, 16, 16);
   graphics.generateTexture('item', 16, 16);
@@ -51,22 +50,21 @@ function preload() {
 
 function create() {
   player = this.physics.add.sprite(200, 200, 'idle1').setCollideWorldBounds(true);
+  player.anims.play('idle'); // 👈 Play idle animation on start
 
-  // Add animations
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'left', frames: [{ key: 'left1' }, { key: 'left2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'right', frames: [{ key: 'right1' }, { key: 'right2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'idle', frames: [{ key: 'idle1' }, { key: 'idle2' }], frameRate: 2, repeat: -1 });
 
-  // Create items with physics
   items = this.physics.add.group();
   for (let i = 0; i < 3; i++) {
     const x = Phaser.Math.Between(50, 350);
     const y = Phaser.Math.Between(50, 350);
     const item = items.create(x, y, 'item');
     item.setImmovable(true);
-    item.body.setCircle(8); // tighter hitbox
+    item.body.setCircle(8);
   }
 
   this.physics.add.overlap(player, items, collectItem, null, this);
@@ -104,12 +102,23 @@ function update(time, delta) {
       idleTimer = 0;
     } else {
       player.setVelocity(0);
-      // ❗ Removed forced position snap to allow physics overlap to register
       targetPosition = null;
       idleTimer = 0;
+
+      // ✅ Stop animation when arrived
+      player.anims.stop();
+
+      // Set appropriate static frame based on last direction
+      const frameMap = {
+        up: 'up1',
+        down: 'down1',
+        left: 'left1',
+        right: 'right1',
+        idle: 'idle1'
+      };
+      player.setTexture(frameMap[lastDirection] || 'idle1');
     }
   } else {
-    // Not moving: check idle animation timer
     idleTimer += delta;
 
     if (idleTimer > 1000 && lastDirection !== 'idle') {
