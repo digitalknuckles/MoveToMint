@@ -3,19 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <title>FunFart Grab NFT Game</title>
+
+  <!-- Phaser Game Engine -->
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.6.6/dist/umd/index.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.7/dist/index.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.umd.min.js"></script>
+
+  <!-- WalletConnect v2 Provider (v2.10.1) -->
+  <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.10.1/dist/umd/index.min.js"></script>
+
+  <!-- Web3Modal v2 -->
+  <script src="https://unpkg.com/web3modal@2.7.1/dist/index.umd.js"></script>
+
+  <!-- Ethers v5 -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
   <style>
-    body { margin: 0; padding: 0; overflow: hidden; background: #1e1e1e; }
-    canvas { display: block; margin: auto; }
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #1e1e1e;
+    }
+    canvas {
+      display: block;
+      margin: auto;
+    }
   </style>
 </head>
 <body>
   <div id="game-container"></div>
 
-  <!-- These should be regular scripts, not modules -->
+  <!-- Scripts -->
   <script src="walletconnect.js"></script>
   <script src="game.js"></script>
 </body>
