@@ -30,16 +30,16 @@ let idleTimer = 0;
 
 function preload() {
   this.load.image('background', 'Background_Blue-01.png');
-  this.load.image('up1', 'up1+.png');
-  this.load.image('up2', 'up2+.png');
-  this.load.image('down1', 'down1+.png');
-  this.load.image('down2', 'down2+.png');
-  this.load.image('left1', 'left1+.png');
-  this.load.image('left2', 'left2+.png');
-  this.load.image('right1', 'right1+.png');
-  this.load.image('right2', 'right2+.png');
-  this.load.image('idle1', 'idle1+.png');
-  this.load.image('idle2', 'idle2+.png');
+  this.load.image('up1', 'up1.png');
+  this.load.image('up2', 'up2.png');
+  this.load.image('down1', 'down1.png');
+  this.load.image('down2', 'down2.png');
+  this.load.image('left1', 'left1.png');
+  this.load.image('left2', 'left2.png');
+  this.load.image('right1', 'right1.png');
+  this.load.image('right2', 'right2.png');
+  this.load.image('idle1', 'idle1.png');
+  this.load.image('idle2', 'idle2.png');
 
   const graphics = this.add.graphics();
   graphics.fillStyle(0xff0000, 1).fillRect(0, 0, 16, 16);
@@ -54,7 +54,7 @@ function create() {
 
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
-    .setDisplaySize(64, 64);
+    .setDisplaySize(32, 32);
 
   player.body.setSize(30, 30).setOffset(1, 1); // Adjusted for larger display
 
