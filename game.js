@@ -54,7 +54,7 @@ function create() {
 
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
-    .setDisplaySize(32, 32);
+    .setDisplaySize(64, 64);
 
   player.body.setSize(30, 30).setOffset(1, 1); // Adjusted for larger display
 
@@ -72,7 +72,7 @@ function create() {
     const y = Phaser.Math.Between(50, 350);
     const item = items.create(x, y, 'item');
     item.setImmovable(true);
-    item.body.setCircle(16);
+    item.body.setCircle(32);
   }
 
   this.physics.add.overlap(player, items, collectItem, null, this);
