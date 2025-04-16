@@ -1,3 +1,6 @@
+// walletconnect.js
+import { ethers } from 'https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js';
+
 const projectId = "15da3c431a74b29edb63198a503d45b5";
 
 const metadata = {
@@ -7,22 +10,20 @@ const metadata = {
   icons: ["https://digitalknuckles.github.io/MoveToMint/icon.png"]
 };
 
-// ✅ Web3Modal v2 Setup (global is `window.web3modal.default`)
-const Web3Modal = window.web3modal.default;
-
-// ✅ WalletConnect Ethereum Provider
-const ethereumProvider = window.WalletConnectEthereumProvider;
-
-// Initialize Web3Modal
-const web3Modal = new Web3Modal({
-  walletConnectProvider: {
-    package: ethereumProvider,
+const providerOptions = {
+  walletconnect: {
+    package: window.WalletConnectProvider.default,
     options: {
-      projectId,
-      chains: [137, 8453], // Polygon + Base
-      metadata
+      infuraId: projectId
     }
   }
+};
+
+const web3Modal = new window.Web3Modal.default({
+  cacheProvider: true,
+  providerOptions,
+  theme: "light",
+  metadata
 });
 
 window.connectWallet = async function () {
