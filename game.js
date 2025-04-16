@@ -50,14 +50,15 @@ function preload() {
 
 function create() {
   player = this.physics.add.sprite(200, 200, 'idle1').setCollideWorldBounds(true);
-  player.body.setSize(14, 14).setOffset(1, 1); // optional hitbox tuning
-  player.anims.play('idle');
+  player.body.setSize(14, 14).setOffset(1, 1);
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'left', frames: [{ key: 'left1' }, { key: 'left2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'right', frames: [{ key: 'right1' }, { key: 'right2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'idle', frames: [{ key: 'idle1' }, { key: 'idle2' }], frameRate: 2, repeat: -1 });
+
+  player.anims.play('idle');
 
   items = this.physics.add.group();
   for (let i = 0; i < 3; i++) {
@@ -95,7 +96,7 @@ function update(time, delta) {
         direction = dy > 0 ? 'down' : 'up';
       }
 
-      if (direction !== lastDirection) {
+      if (direction !== lastDirection || player.anims.currentAnim?.key !== direction) {
         player.anims.play(direction, true);
         lastDirection = direction;
       }
@@ -105,8 +106,12 @@ function update(time, delta) {
       stopPlayerMovement();
     }
   } else {
-    // Hit boundary or no target
-    if (player.body.blocked.left || player.body.blocked.right || player.body.blocked.up || player.body.blocked.down) {
+    if (
+      player.body.blocked.left ||
+      player.body.blocked.right ||
+      player.body.blocked.up ||
+      player.body.blocked.down
+    ) {
       stopPlayerMovement();
     }
 
@@ -118,7 +123,6 @@ function update(time, delta) {
     }
   }
 
-  // ✅ Keep player within bounds (just in case)
   player.x = Phaser.Math.Clamp(player.x, 0, config.width);
   player.y = Phaser.Math.Clamp(player.y, 0, config.height);
 }
@@ -127,16 +131,11 @@ function stopPlayerMovement() {
   player.setVelocity(0);
   targetPosition = null;
   idleTimer = 0;
-  player.anims.stop();
 
-  const frameMap = {
-    up: 'up1',
-    down: 'down1',
-    left: 'left1',
-    right: 'right1',
-    idle: 'idle1'
-  };
-  player.setTexture(frameMap[lastDirection] || 'idle1');
+  if (lastDirection !== 'idle') {
+    player.anims.play('idle', true);
+    lastDirection = 'idle';
+  }
 }
 
 function collectItem(player, item) {
