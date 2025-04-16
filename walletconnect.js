@@ -7,11 +7,11 @@ const metadata = {
   icons: ["https://digitalknuckles.github.io/MoveToMint/icon.png"]
 };
 
-// Supported chains
-const supportedChains = [137, 8453]; // Polygon and Base
+// Supported chains: Polygon (137) and Base (8453)
+const supportedChains = [137, 8453];
 
-// Setup provider
-const walletConnectProvider = new window.WalletConnectEthereumProvider.default({
+// ✅ FIXED: No `.default` here
+const walletConnectProvider = new window.WalletConnectEthereumProvider({
   projectId,
   chains: supportedChains,
   showQrModal: true,
@@ -20,7 +20,6 @@ const walletConnectProvider = new window.WalletConnectEthereumProvider.default({
 
 window.connectWallet = async function () {
   try {
-    // Enable session
     await walletConnectProvider.enable();
 
     const provider = new ethers.providers.Web3Provider(walletConnectProvider);
