@@ -1,5 +1,3 @@
-// game.js
-
 const config = {
   type: Phaser.AUTO,
   width: 400,
@@ -27,32 +25,39 @@ let collectedIcons = [];
 let targetPosition = null;
 const speed = 4 * 60;
 let collectedCount = 0;
+let lastDirection = 'idle';
+let idleTimer = 0;
 
 function preload() {
-  // Placeholder graphics created in create()
+  this.load.image('up1', 'up1.png');
+  this.load.image('up2', 'up2.png');
+  this.load.image('down1', 'down1.png');
+  this.load.image('down2', 'down2.png');
+  this.load.image('left1', 'left1.png');
+  this.load.image('left2', 'left2.png');
+  this.load.image('right1', 'right1.png');
+  this.load.image('right2', 'right2.png');
+  this.load.image('idle1', 'idle1.png');
+  this.load.image('idle2', 'idle2.png');
+
+  // Placeholder textures
+  const graphics = this.add.graphics();
+  graphics.fillStyle(0xff0000, 1).fillRect(0, 0, 16, 16);
+  graphics.generateTexture('item', 16, 16);
+  graphics.clear().fillStyle(0x00ff00, 1).fillRect(0, 0, 16, 16);
+  graphics.generateTexture('icon', 16, 16);
+  graphics.destroy();
 }
 
 function create() {
-  const graphics = this.add.graphics();
+  player = this.physics.add.sprite(200, 200, 'idle1').setCollideWorldBounds(true);
 
-  graphics.fillStyle(0xffffff, 1);
-  graphics.fillRect(0, 0, 32, 32);
-  graphics.generateTexture('player', 32, 32);
-
-  graphics.clear();
-  graphics.fillStyle(0xff0000, 1);
-  graphics.fillRect(0, 0, 16, 16);
-  graphics.generateTexture('item', 16, 16);
-
-  graphics.clear();
-  graphics.fillStyle(0x00ff00, 1);
-  graphics.fillRect(0, 0, 16, 16);
-  graphics.generateTexture('icon', 16, 16);
-
-  graphics.destroy();
-
-  player = this.physics.add.sprite(200, 200, 'player');
-  player.setCollideWorldBounds(true);
+  // Add animations
+  this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
+  this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
+  this.anims.create({ key: 'left', frames: [{ key: 'left1' }, { key: 'left2' }], frameRate: 6, repeat: -1 });
+  this.anims.create({ key: 'right', frames: [{ key: 'right1' }, { key: 'right2' }], frameRate: 6, repeat: -1 });
+  this.anims.create({ key: 'idle', frames: [{ key: 'idle1' }, { key: 'idle2' }], frameRate: 2, repeat: -1 });
 
   items = this.physics.add.group();
   for (let i = 0; i < 3; i++) {
@@ -68,19 +73,46 @@ function create() {
   });
 }
 
-function update() {
+function update(time, delta) {
   player.setVelocity(0);
 
   if (targetPosition) {
-    const distance = Phaser.Math.Distance.Between(player.x, player.y, targetPosition.x, targetPosition.y);
+    const dist = Phaser.Math.Distance.Between(player.x, player.y, targetPosition.x, targetPosition.y);
 
-    if (distance > 4) {
+    if (dist > 4) {
       this.physics.moveToObject(player, targetPosition, speed);
+
+      const dx = targetPosition.x - player.x;
+      const dy = targetPosition.y - player.y;
+
+      let direction = lastDirection;
+
+      if (Math.abs(dx) > Math.abs(dy)) {
+        direction = dx > 0 ? 'right' : 'left';
+      } else {
+        direction = dy > 0 ? 'down' : 'up';
+      }
+
+      if (direction !== lastDirection) {
+        player.anims.play(direction, true);
+        lastDirection = direction;
+      }
+
+      idleTimer = 0;
     } else {
       player.setVelocity(0);
       player.x = targetPosition.x;
       player.y = targetPosition.y;
       targetPosition = null;
+      idleTimer = 0;
+    }
+  } else {
+    // Not moving: check idle animation timer
+    idleTimer += delta;
+
+    if (idleTimer > 1000 && lastDirection !== 'idle') {
+      player.anims.play('idle', true);
+      lastDirection = 'idle';
     }
   }
 }
@@ -94,10 +126,9 @@ function collectItem(player, item) {
 
   if (collectedCount === 3) {
     const victoryObject = game.scene.scenes[0].add.image(350, 350, 'item').setScrollFactor(0).setInteractive();
-
     victoryObject.on('pointerdown', () => {
       alert('🎉 Victory! All items collected!');
-      window.mintPrizeNFT();
+      window.mintPrizeNFT?.();
     });
   }
 }
