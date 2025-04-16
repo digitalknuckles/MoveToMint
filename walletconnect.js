@@ -7,27 +7,32 @@ const metadata = {
   icons: ["https://digitalknuckles.github.io/MoveToMint/icon.png"]
 };
 
-// Supported chains: Polygon (137) and Base (8453)
-const supportedChains = [137, 8453];
+// ✅ Web3Modal v2 Setup (global is `window.web3modal.default`)
+const Web3Modal = window.web3modal.default;
 
-// ✅ FIXED: No `.default` here
-const walletConnectProvider = new window.WalletConnectEthereumProvider({
-  projectId,
-  chains: supportedChains,
-  showQrModal: true,
-  metadata
+// ✅ WalletConnect Ethereum Provider
+const ethereumProvider = window.WalletConnectEthereumProvider;
+
+// Initialize Web3Modal
+const web3Modal = new Web3Modal({
+  walletConnectProvider: {
+    package: ethereumProvider,
+    options: {
+      projectId,
+      chains: [137, 8453], // Polygon + Base
+      metadata
+    }
+  }
 });
 
 window.connectWallet = async function () {
   try {
-    await walletConnectProvider.enable();
-
-    const provider = new ethers.providers.Web3Provider(walletConnectProvider);
-    const signer = provider.getSigner();
+    const provider = await web3Modal.connect();
+    const web3Provider = new ethers.providers.Web3Provider(provider);
+    const signer = web3Provider.getSigner();
     const address = await signer.getAddress();
-
     console.log("🔌 Wallet connected:", address);
-    return { provider, signer, address };
+    return { provider: web3Provider, signer, address };
   } catch (err) {
     console.error("❌ Wallet connection failed:", err);
     alert("❌ Failed to connect wallet: " + (err.message || err));
