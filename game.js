@@ -2,7 +2,6 @@ const config = {
   type: Phaser.AUTO,
   width: 400,
   height: 400,
-  backgroundColor: '#3399cc',
   parent: 'game-container',
   scene: {
     preload: preload,
@@ -21,6 +20,7 @@ const game = new Phaser.Game(config);
 
 let player;
 let items;
+let background;
 let collectedIcons = [];
 let targetPosition = null;
 const speed = 4 * 60;
@@ -29,6 +29,7 @@ let lastDirection = 'idle';
 let idleTimer = 0;
 
 function preload() {
+  this.load.image('background', 'Background_Blue-01.png');
   this.load.image('up1', 'up1.png');
   this.load.image('up2', 'up2.png');
   this.load.image('down1', 'down1.png');
@@ -49,8 +50,13 @@ function preload() {
 }
 
 function create() {
-  player = this.physics.add.sprite(200, 200, 'idle1').setCollideWorldBounds(true);
-  player.body.setSize(14, 14).setOffset(1, 1);
+  background = this.add.image(0, 0, 'background').setOrigin(0, 0).setDisplaySize(400, 400);
+
+  player = this.physics.add.sprite(200, 200, 'idle1')
+    .setCollideWorldBounds(true)
+    .setDisplaySize(32, 32);
+
+  player.body.setSize(30, 30).setOffset(1, 1); // Adjusted for larger display
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
