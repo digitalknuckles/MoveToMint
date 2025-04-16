@@ -54,7 +54,7 @@ function create() {
 
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
-    .setDisplaySize(64, 64);
+    .setDisplaySize(96, 96);
 
   player.body.setSize(32, 32).setOffset(1, 1); // Adjusted for larger display
 
