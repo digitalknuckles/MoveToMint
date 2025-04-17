@@ -40,7 +40,7 @@ function preload() {
   this.load.image('right2', 'right2+.png');
   this.load.image('idle1', 'idle1+.png');
   this.load.image('idle2', 'idle2+.png');
-  this.load.image('bed', 'bed.png'); // Add your bed sprite
+  this.load.image('bed', 'BG_Bed.png'); // Add your bed sprite
 
   const graphics = this.add.graphics();
   graphics.fillStyle(0xff0000, 1).fillRect(0, 0, 16, 16);
