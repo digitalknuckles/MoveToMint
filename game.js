@@ -76,7 +76,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(24, 400);
-  bed.body.setSize(24, 360).setOffset(18, 200);
+  bed.body.setSize(24, 300).setOffset(18, 200);
   this.physics.add.collider(player, wall);
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
