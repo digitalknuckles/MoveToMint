@@ -72,11 +72,11 @@ function create() {
   this.physics.add.collider(player, bedProp);
 
   // Optional: second decorative bed object
-  const wall = this.physics.add.sprite(1, 200, 'wall')
+  const wall = this.physics.add.sprite(1, 400, 'wall')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(36, 400);
-  bed.body.setSize(36, 400).setOffset(18, 200);
+  bed.body.setSize(32, 400).setOffset(18, 200);
   this.physics.add.collider(player, wall);
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
