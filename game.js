@@ -62,7 +62,7 @@ function create() {
   // Bed object setup
   const bed = this.physics.add.sprite(150, 300, 'bed')
     .setImmovable(true)
-    .setOrigin(0, 0)
+    .setOrigin(32, 200)
     .setDisplaySize(120, 60); // Resize to match visuals
 
   bed.body.setSize(100, 25);   // Hitbox width & height
