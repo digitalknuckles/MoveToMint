@@ -65,8 +65,8 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(120, 60); // Adjust to match image
-  bedProp.body.setSize(100, 25);
-  bedProp.body.setOffset(1, 1);
+  bedProp.body.setSize(120, 32);
+  bedProp.body.setOffset(1, 10);
 
   this.physics.add.collider(player, bedProp);
 
@@ -75,7 +75,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(120, 60);
-  bed.body.setSize(100, 25).setOffset(1, 1);
+  bed.body.setSize(120, 32).setOffset(1, 10);
   this.physics.add.collider(player, bed);
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
