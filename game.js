@@ -31,7 +31,6 @@ let bedProp;
 
 function preload() {
   this.load.image('background', 'Background_Grey+.png');
-  this.load.image('wall', 'wall.png');
   this.load.image('up1', 'up1+.png');
   this.load.image('up2', 'up2+.png');
   this.load.image('down1', 'down1+.png');
@@ -44,7 +43,8 @@ function preload() {
   this.load.image('idle2', 'idle2+.png');
   this.load.image('bed', 'BG_Bed.png'); // Optional second bed
   this.load.image('BG_Bed', 'BG_Bed.png'); // ✅ New prop
-
+  this.load.image('wall', 'wall.png');
+  
   const graphics = this.add.graphics();
   graphics.fillStyle(0x00ff00, 1).fillRect(0, 0, 16, 16); // Only green icon
   graphics.generateTexture('icon', 16, 16);
