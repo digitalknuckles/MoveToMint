@@ -64,9 +64,9 @@ function create() {
   bedProp = this.physics.add.sprite(32, 200, 'BG_Bed')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(120, 60); // Adjust to match image
-  bedProp.body.setSize(120, 60);
-  bedProp.body.setOffset(1, 1);
+    .setDisplaySize(96, 48); // Adjust to match image
+  bedProp.body.setSize(90, 20);
+  bedProp.body.setOffset(4, 28);
 
   this.physics.add.collider(player, bedProp);
 
