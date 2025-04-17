@@ -31,6 +31,7 @@ let bedProp;
 
 function preload() {
   this.load.image('background', 'Background_Grey+.png');
+  this.load.image('wall', 'wall.png');
   this.load.image('up1', 'up1+.png');
   this.load.image('up2', 'up2+.png');
   this.load.image('down1', 'down1+.png');
@@ -71,12 +72,12 @@ function create() {
   this.physics.add.collider(player, bedProp);
 
   // Optional: second decorative bed object
-  const bed = this.physics.add.sprite(150, 300, 'BG_Bed')
+  const wall = this.physics.add.sprite(1, 200, 'wall')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(120, 60);
-  bed.body.setSize(100, 40).setOffset(10, 32);
-  this.physics.add.collider(player, bed);
+    .setDisplaySize(36, 400);
+  bed.body.setSize(36, 400).setOffset(18, 200);
+  this.physics.add.collider(player, wall);
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
