@@ -58,7 +58,7 @@ function create() {
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
     .setDisplaySize(96, 96);
-  player.body.setSize(32, 32).setOffset(1, 1);
+  player.body.setSize(48, 48).setOffset(1, 1);
 
   // ✅ Add solid bed prop
   bedProp = this.physics.add.sprite(32, 200, 'BG_Bed')
