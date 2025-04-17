@@ -41,7 +41,7 @@ function preload() {
   this.load.image('right2', 'right2+.png');
   this.load.image('idle1', 'idle1+.png');
   this.load.image('idle2', 'idle2+.png');
-  this.load.image('bed', 'bed.png'); // Optional second bed
+  this.load.image('bed', 'BG_Bed.png'); // Optional second bed
   this.load.image('BG_Bed', 'BG_Bed.png'); // ✅ New prop
 
   const graphics = this.add.graphics();
@@ -64,9 +64,9 @@ function create() {
   bedProp = this.physics.add.sprite(32, 200, 'BG_Bed')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(96, 48); // Adjust to match image
-  bedProp.body.setSize(90, 20);
-  bedProp.body.setOffset(4, 28);
+    .setDisplaySize(120, 60); // Adjust to match image
+  bedProp.body.setSize(100, 25);
+  bedProp.body.setOffset(1, 1);
 
   this.physics.add.collider(player, bedProp);
 
@@ -75,7 +75,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(120, 60);
-  bed.body.setSize(100, 25).setOffset(10, 30);
+  bed.body.setSize(100, 25).setOffset(1, 1);
   this.physics.add.collider(player, bed);
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
