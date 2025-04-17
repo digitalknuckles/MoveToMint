@@ -58,14 +58,14 @@ function create() {
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
     .setDisplaySize(96, 96);
-  player.body.setSize(16, 16).setOffset(8, 8);
+  player.body.setSize(16, 32).setOffset(16, 16);
 
   // ✅ Add solid bed prop
   bedProp = this.physics.add.sprite(32, 200, 'BG_Bed')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(96, 48); // Adjust to match image
-  bedProp.body.setSize(96, 48);
+    .setDisplaySize(120, 60); // Adjust to match image
+  bedProp.body.setSize(100, 60);
   bedProp.body.setOffset(4, 28);
 
   this.physics.add.collider(player, bedProp);
@@ -75,7 +75,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(120, 60);
-  bed.body.setSize(100, 40).setOffset(0, 0);
+  bed.body.setSize(100, 40).setOffset(10, 32);
   this.physics.add.collider(player, bed);
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
