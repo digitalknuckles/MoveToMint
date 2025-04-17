@@ -75,7 +75,7 @@ function create() {
   const wall = this.physics.add.sprite(2, 2, 'wall')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(24, 400);
+    .setDisplaySize(24, 300);
   bed.body.setSize(24, 300).setOffset(18, 200);
   this.physics.add.collider(player, wall);
 
