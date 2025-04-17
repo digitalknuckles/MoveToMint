@@ -4,14 +4,14 @@ const config = {
   height: 400,
   parent: 'game-container',
   scene: {
-    preload,
-    create,
-    update
+    preload: preload,
+    create: create,
+    update: update
   },
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false // Set to true to visualize hitboxes
+      debug: false
     }
   }
 };
@@ -27,6 +27,7 @@ const speed = 4 * 60;
 let collectedCount = 0;
 let lastDirection = 'idle';
 let idleTimer = 0;
+let bedProp;
 
 function preload() {
   this.load.image('background', 'Background_Grey+.png');
@@ -40,13 +41,14 @@ function preload() {
   this.load.image('right2', 'right2+.png');
   this.load.image('idle1', 'idle1+.png');
   this.load.image('idle2', 'idle2+.png');
-  this.load.image('bed', 'BG_Bed.png'); // Add your bed sprite
+  this.load.image('bed', 'bed.png'); // Optional second bed
+  this.load.image('BG_Bed', 'BG_Bed.png'); // ✅ New prop
 
   const graphics = this.add.graphics();
-  graphics.fillStyle(0xff0000, 1).fillRect(0, 0, 16, 16);
-  graphics.generateTexture('item', 16, 16);
-  graphics.clear().fillStyle(0x00ff00, 1).fillRect(0, 0, 16, 16);
+  graphics.fillStyle(0x00ff00, 1).fillRect(0, 0, 16, 16); // Only green icon
   graphics.generateTexture('icon', 16, 16);
+  graphics.clear().fillStyle(0xffcc00, 1).fillRect(0, 0, 16, 16);
+  graphics.generateTexture('item', 16, 16);
   graphics.destroy();
 }
 
@@ -56,21 +58,25 @@ function create() {
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
     .setDisplaySize(96, 96);
-
   player.body.setSize(32, 32).setOffset(1, 1);
 
-  // Bed object setup
+  // ✅ Add solid bed prop
+  bedProp = this.physics.add.sprite(32, 200, 'BG_Bed')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(96, 48); // Adjust to match image
+  bedProp.body.setSize(90, 20);
+  bedProp.body.setOffset(4, 28);
+
+  this.physics.add.collider(player, bedProp);
+
+  // Optional: second decorative bed object
   const bed = this.physics.add.sprite(150, 300, 'bed')
     .setImmovable(true)
-    .setOrigin(32, 200)
-    .setDisplaySize(120, 60); // Resize to match visuals
-
-  bed.body.setSize(100, 25);   // Hitbox width & height
-  bed.body.setOffset(10, 30);  // Push hitbox to mattress area
-
-  this.physics.add.collider(player, bed, () => {
-    console.log('💥 Player collided with the bed!');
-  });
+    .setOrigin(0, 0)
+    .setDisplaySize(120, 60);
+  bed.body.setSize(100, 25).setOffset(10, 30);
+  this.physics.add.collider(player, bed);
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
@@ -80,13 +86,24 @@ function create() {
 
   player.anims.play('idle');
 
+  // ✅ Function to avoid bedProp area when spawning items
+  const safeSpawn = (x, y) => {
+    const safeZone = new Phaser.Geom.Rectangle(bedProp.x, bedProp.y, bedProp.displayWidth, bedProp.displayHeight);
+    return !safeZone.contains(x, y);
+  };
+
+  // ✅ Spawn items in safe positions
   items = this.physics.add.group();
-  for (let i = 0; i < 3; i++) {
+  let attempts = 0;
+  while (items.getChildren().length < 3 && attempts < 100) {
     const x = Phaser.Math.Between(50, 350);
     const y = Phaser.Math.Between(50, 350);
-    const item = items.create(x, y, 'item');
-    item.setImmovable(true);
-    item.body.setCircle(16);
+    if (safeSpawn(x, y)) {
+      const item = items.create(x, y, 'item');
+      item.setImmovable(true);
+      item.body.setCircle(8); // smaller collision for better pickup feel
+    }
+    attempts++;
   }
 
   this.physics.add.overlap(player, items, collectItem, null, this);
