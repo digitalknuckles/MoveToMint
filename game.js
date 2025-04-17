@@ -58,15 +58,15 @@ function create() {
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
     .setDisplaySize(96, 96);
-  player.body.setSize(16, 24).setOffset(16, 12);
+  player.body.setSize(20, 28).setOffset(16, 12);
 
   // ✅ Add solid bed prop
   bedProp = this.physics.add.sprite(32, 200, 'BG_Bed')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(120, 60); // Adjust to match image
-  bedProp.body.setSize(100, 48);
-  bedProp.body.setOffset(4, 16);
+  bedProp.body.setSize(120, 48);
+  bedProp.body.setOffset(4, 18);
 
   this.physics.add.collider(player, bedProp);
 
