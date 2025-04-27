@@ -88,12 +88,12 @@ function create() {
   wall.body.setSize(32, 400).setOffset(12, 0);
   this.physics.add.collider(player, wall);
 
-  goldy = this.physics.add.sprite(100, -150, 'goldy1')
+  goldy = this.physics.add.sprite(100, -100, 'goldy1')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(300, 300);
-  goldy.body.setSize(80, 50);
-  goldy.body.setOffset(50, 0);
+  goldy.body.setSize(100, 50);
+  goldy.body.setOffset(40, 0);
 
   this.physics.add.collider(player, goldy);
 
