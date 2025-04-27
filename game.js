@@ -88,6 +88,13 @@ function create() {
   wall.body.setSize(32, 400).setOffset(12, 0);
   this.physics.add.collider(player, wall);
 
+    const wall = this.physics.add.sprite(100, -120, 'wall')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(100, 100);
+  wall.body.setSize(100, 100).setOffset(0, 0);
+  this.physics.add.collider(player, wall);
+
   goldy = this.physics.add.sprite(100, -120, 'goldy1')
     .setImmovable(true)
     .setOrigin(0, 0)
