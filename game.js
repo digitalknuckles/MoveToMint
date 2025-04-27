@@ -101,7 +101,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(59, 96);
-  plant.body.setSize(25, 29).setOffset(10, 48);
+  plant.body.setSize(25, 25).setOffset(10, 52);
   this.physics.add.collider(player, plant);
 
   goldy = this.physics.add.sprite(100, -120, 'goldy1')
