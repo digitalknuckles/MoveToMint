@@ -97,11 +97,11 @@ function create() {
   wall2.body.setSize(90, 50).setOffset(30, 40);
   this.physics.add.collider(player, wall2);
 
-    const plant = this.physics.add.sprite(10, 350, 'plant')
+    const plant = this.physics.add.sprite(10, 250, 'plant')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(78, 152);
-  plant.body.setSize(78, 78).setOffset(0, 0);
+  plant.body.setSize(25, 265).setOffset(0, 0);
   this.physics.add.collider(player, plant);
 
   goldy = this.physics.add.sprite(100, -120, 'goldy1')
