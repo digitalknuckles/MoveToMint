@@ -102,7 +102,7 @@ function create() {
   this.goldyFrames = ['goldy1', 'goldy2', 'goldy3', 'goldy4', 'goldy5', 'goldy6', 'goldy7', 'goldy8'];
   this.goldyFrameIndex = 0;
   this.goldyTimer = this.time.addEvent({
-    delay: 60, // 100ms per frame (10 FPS)
+    delay: 40, // 100ms per frame (10 FPS)
     callback: () => {
       this.goldyFrameIndex = (this.goldyFrameIndex + 1) % this.goldyFrames.length;
       goldy.setTexture(this.goldyFrames[this.goldyFrameIndex]);
