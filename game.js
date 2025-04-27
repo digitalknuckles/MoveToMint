@@ -88,7 +88,7 @@ function create() {
   wall.body.setSize(32, 400).setOffset(12, 0);
   this.physics.add.collider(player, wall);
 
-  goldy = this.physics.add.sprite(100, 10, 'goldy1')
+  goldy = this.physics.add.sprite(100, -50, 'goldy1')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(300, 300);
