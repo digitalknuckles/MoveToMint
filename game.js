@@ -23,6 +23,7 @@ let items;
 let background;
 let collectedIcons = [];
 let targetPosition = null;
+let goldy; 
 const speed = 4 * 60;
 let collectedCount = 0;
 let lastDirection = 'idle';
@@ -31,7 +32,14 @@ let bedProp;
 
 function preload() {
   this.load.image('background', 'Background_Grey+.png');
-  this.load.image('Goldy', 'Goldy.gif');
+  this.load.image('goldy1', 'goldy1.png');
+  this.load.image('goldy2', 'goldy2.png');
+  this.load.image('goldy3', 'goldy3.png');
+  this.load.image('goldy4', 'goldy4.png');
+  this.load.image('goldy5', 'goldy5.png');
+  this.load.image('goldy6', 'goldy6.png');
+  this.load.image('goldy7', 'goldy7.png');
+  this.load.image('goldy8', 'goldy8.png');
   this.load.image('up1', 'up1+.png');
   this.load.image('up2', 'up2+.png');
   this.load.image('down1', 'down1+.png');
@@ -80,13 +88,28 @@ function create() {
   wall.body.setSize(32, 400).setOffset(12, 0);
   this.physics.add.collider(player, wall);
 
-  const goldy = this.physics.add.sprite(140, 80, 'Goldy') // Position at mid-top
+  goldy = this.physics.add.sprite(140, 80, 'goldy1')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(300, 300); // Adjust to your Goldy.gif size
+    .setDisplaySize(300, 300);
   goldy.body.setSize(80, 50);
   goldy.body.setOffset(50, 0);
+
   this.physics.add.collider(player, goldy);
+
+  
+  // ✅ Setup manual animation for Goldy
+  this.goldyFrames = ['goldy1', 'goldy2', 'goldy3', 'goldy4', 'goldy5', 'goldy6', 'goldy7', 'goldy8'];
+  this.goldyFrameIndex = 0;
+  this.goldyTimer = this.time.addEvent({
+    delay: 100, // 100ms per frame (10 FPS)
+    callback: () => {
+      this.goldyFrameIndex = (this.goldyFrameIndex + 1) % this.goldyFrames.length;
+      goldy.setTexture(this.goldyFrames[this.goldyFrameIndex]);
+    },
+    callbackScope: this,
+    loop: true
+  });
   
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
