@@ -80,12 +80,14 @@ function create() {
   wall.body.setSize(32, 400).setOffset(12, 0);
   this.physics.add.collider(player, wall);
 
-  const goldy = this.physics.add.sprite(140, 40, 'Goldy') // Position at mid-top
+  const goldy = this.physics.add.sprite(140, 80, 'Goldy') // Position at mid-top
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(120, 60); // Adjust to your Goldy.gif size
+    .setDisplaySize(200, 120); // Adjust to your Goldy.gif size
   goldy.body.setSize(108, 48);
   goldy.body.setOffset(6, 6);
+  this.physics.add.collider(player, goldy);
+  
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
