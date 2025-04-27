@@ -92,7 +92,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(300, 300);
-  goldy.body.setSize(300, 300);
+  goldy.body.setSize(100, 100);
   goldy.body.setOffset(0, 0);
   
   this.physics.add.collider(player, goldy);
