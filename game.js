@@ -11,7 +11,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: true
     }
   }
 };
@@ -54,6 +54,7 @@ function preload() {
   this.load.image('BG_Bed', 'BG_Bed.png'); // ✅ New prop
   this.load.image('wall', 'wall.png');
   this.load.image('wall2', 'wall2.png');
+  this.load.image('plant', 'plant.png');
   
   const graphics = this.add.graphics();
   graphics.fillStyle(0x00ff00, 1).fillRect(0, 0, 16, 16); // Only green icon
@@ -95,6 +96,13 @@ function create() {
     .setDisplaySize(80, 100);
   wall2.body.setSize(90, 50).setOffset(30, 40);
   this.physics.add.collider(player, wall2);
+
+    const plant = this.physics.add.sprite(10, 350, 'plant')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(78, 152);
+  plant.body.setSize(78, 78).setOffset(0, 0);
+  this.physics.add.collider(player, plant);
 
   goldy = this.physics.add.sprite(100, -120, 'goldy1')
     .setImmovable(true)
