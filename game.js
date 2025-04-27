@@ -102,7 +102,7 @@ function create() {
   goldy.body.setSize(100, 100);
   goldy.body.setOffset(0, 0);
   
-  this.physics.add.collider(player, goldy);
+ // this.physics.add.collider(player, goldy);
   console.log(goldy.body);
     this.anims.create({
     key: 'goldy_anim',
