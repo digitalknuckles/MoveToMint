@@ -84,8 +84,8 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(300, 300); // Adjust to your Goldy.gif size
-  goldy.body.setSize(100, 100);
-  goldy.body.setOffset(50, 50);
+  goldy.body.setSize(80, 50);
+  goldy.body.setOffset(50, 0);
   this.physics.add.collider(player, goldy);
   
 
