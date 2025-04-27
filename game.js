@@ -73,7 +73,7 @@ function create() {
   player.body.setSize(20, 28).setOffset(16, 8);
 
   // ✅ Add solid bed prop
-  bedProp = this.physics.add.sprite(32, 200, 'BG_Bed')
+  bedProp = this.physics.add.sprite(32, 160, 'BG_Bed')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(120, 60); // Adjust to match image
@@ -97,7 +97,7 @@ function create() {
   wall2.body.setSize(90, 50).setOffset(30, 40);
   this.physics.add.collider(player, wall2);
 
-    const plant = this.physics.add.sprite(25, 275, 'plant')
+    const plant = this.physics.add.sprite(25, 250, 'plant')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(59, 96);
