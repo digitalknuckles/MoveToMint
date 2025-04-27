@@ -109,7 +109,7 @@ function create() {
       { key: 'goldy7' },
       { key: 'goldy8' }
     ],
-    frameRate: 18,
+    frameRate: 4,
     repeat: -1
   });
 
