@@ -83,9 +83,9 @@ function create() {
   const goldy = this.physics.add.sprite(140, 80, 'Goldy') // Position at mid-top
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(200, 120); // Adjust to your Goldy.gif size
-  goldy.body.setSize(108, 48);
-  goldy.body.setOffset(6, 6);
+    .setDisplaySize(300, 300); // Adjust to your Goldy.gif size
+  goldy.body.setSize(100, 100);
+  goldy.body.setOffset(50, 50);
   this.physics.add.collider(player, goldy);
   
 
