@@ -97,20 +97,35 @@ function create() {
 
   this.physics.add.collider(player, goldy);
 
-  
-  // ✅ Setup manual animation for Goldy
-  this.goldyFrames = ['goldy1', 'goldy2', 'goldy3', 'goldy4', 'goldy5', 'goldy6', 'goldy7', 'goldy8'];
-  this.goldyFrameIndex = 0;
-  this.goldyTimer = this.time.addEvent({
-    delay: 180, // 100ms per frame (10 FPS)
-    callback: () => {
-      this.goldyFrameIndex = (this.goldyFrameIndex + 1) % this.goldyFrames.length;
-      goldy.setTexture(this.goldyFrames[this.goldyFrameIndex]);
-    },
-    callbackScope: this,
-    loop: true
+    this.anims.create({
+    key: 'goldy_anim',
+    frames: [
+      { key: 'goldy1' },
+      { key: 'goldy2' },
+      { key: 'goldy3' },
+      { key: 'goldy4' },
+      { key: 'goldy5' },
+      { key: 'goldy6' },
+      { key: 'goldy7' },
+      { key: 'goldy8' }
+    ],
+    frameRate: 18,
+    repeat: -1
   });
-  
+
+  goldy.anims.play('goldy_anim');
+  // ✅ Setup manual animation for Goldy
+  //this.goldyFrames = ['goldy1', 'goldy2', 'goldy3', 'goldy4', 'goldy5', 'goldy6', 'goldy7', 'goldy8'];
+  //this.goldyFrameIndex = 0;
+  //this.goldyTimer = this.time.addEvent({
+   // delay: 180, // 100ms per frame (10 FPS)
+   // callback: () => {
+   //   this.goldyFrameIndex = (this.goldyFrameIndex + 1) % this.goldyFrames.length;
+   //   goldy.setTexture(this.goldyFrames[this.goldyFrameIndex]);
+   // },
+   // callbackScope: this,
+   // loop: true
+  //});
 
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
