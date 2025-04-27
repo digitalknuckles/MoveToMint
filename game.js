@@ -53,6 +53,7 @@ function preload() {
   this.load.image('bed', 'BG_Bed.png'); // Optional second bed
   this.load.image('BG_Bed', 'BG_Bed.png'); // ✅ New prop
   this.load.image('wall', 'wall.png');
+  this.load.image('wall2', 'wall2.png');
   
   const graphics = this.add.graphics();
   graphics.fillStyle(0x00ff00, 1).fillRect(0, 0, 16, 16); // Only green icon
@@ -88,12 +89,12 @@ function create() {
   wall.body.setSize(32, 400).setOffset(12, 0);
   this.physics.add.collider(player, wall);
 
-    const wall = this.physics.add.sprite(100, -120, 'wall')
+    const wall2 = this.physics.add.sprite(100, -120, 'wall2')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(100, 100);
-  wall.body.setSize(100, 100).setOffset(0, 0);
-  this.physics.add.collider(player, wall);
+  wall2.body.setSize(100, 100).setOffset(0, 0);
+  this.physics.add.collider(player, wall2);
 
   goldy = this.physics.add.sprite(100, -120, 'goldy1')
     .setImmovable(true)
