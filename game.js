@@ -94,9 +94,9 @@ function create() {
     .setDisplaySize(300, 300);
   goldy.body.setSize(100, 50);
   goldy.body.setOffset(40, 0);
-
+  
   this.physics.add.collider(player, goldy);
-
+  console.log(goldy.body);
     this.anims.create({
     key: 'goldy_anim',
     frames: [
@@ -109,7 +109,7 @@ function create() {
       { key: 'goldy7' },
       { key: 'goldy8' }
     ],
-    frameRate: 4,
+    frameRate: 5,
     repeat: -1
   });
 
