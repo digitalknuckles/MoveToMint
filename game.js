@@ -31,6 +31,7 @@ let bedProp;
 
 function preload() {
   this.load.image('background', 'Background_Grey+.png');
+  this.load.image('Goldy', 'Goldy.gif');
   this.load.image('up1', 'up1+.png');
   this.load.image('up2', 'up2+.png');
   this.load.image('down1', 'down1+.png');
@@ -79,6 +80,13 @@ function create() {
   wall.body.setSize(32, 400).setOffset(12, 0);
   this.physics.add.collider(player, wall);
 
+  const goldy = this.physics.add.sprite(140, 40, 'Goldy') // Position at mid-top
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(120, 60); // Adjust to your Goldy.gif size
+  goldy.body.setSize(108, 48);
+  goldy.body.setOffset(6, 6);
+
   this.anims.create({ key: 'up', frames: [{ key: 'up1' }, { key: 'up2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'down', frames: [{ key: 'down1' }, { key: 'down2' }], frameRate: 6, repeat: -1 });
   this.anims.create({ key: 'left', frames: [{ key: 'left1' }, { key: 'left2' }], frameRate: 6, repeat: -1 });
@@ -89,8 +97,9 @@ function create() {
 
   // ✅ Function to avoid bedProp area when spawning items
   const safeSpawn = (x, y) => {
-    const safeZone = new Phaser.Geom.Rectangle(bedProp.x, bedProp.y, bedProp.displayWidth, bedProp.displayHeight);
-    return !safeZone.contains(x, y);
+    const bedZone = new Phaser.Geom.Rectangle(bedProp.x, bedProp.y, bedProp.displayWidth, bedProp.displayHeight);
+    const goldyZone = new Phaser.Geom.Rectangle(goldy.x, goldy.y, goldy.displayWidth, goldy.displayHeight);
+    return !bedZone.contains(x, y) && !goldyZone.contains(x, y);
   };
 
   // ✅ Spawn items in safe positions
