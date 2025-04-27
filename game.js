@@ -100,8 +100,8 @@ function create() {
     const plant = this.physics.add.sprite(25, 275, 'plant')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(49, 86);
-  plant.body.setSize(25, 25).setOffset(0, 40);
+    .setDisplaySize(59, 96);
+  plant.body.setSize(25, 25).setOffset(10, 45);
   this.physics.add.collider(player, plant);
 
   goldy = this.physics.add.sprite(100, -120, 'goldy1')
