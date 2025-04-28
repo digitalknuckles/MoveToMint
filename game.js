@@ -55,6 +55,7 @@ function preload() {
   this.load.image('wall', 'wall.png');
   this.load.image('wall2', 'wall2.png');
   this.load.image('plant', 'plant.png');
+  this.load.image('rug1', 'rug1.png');
   
   const graphics = this.add.graphics();
   graphics.fillStyle(0x00ff00, 1).fillRect(0, 0, 16, 16); // Only green icon
@@ -67,6 +68,10 @@ function preload() {
 function create() {
   background = this.add.image(0, 0, 'background').setOrigin(0, 0).setDisplaySize(400, 400);
 
+  rug1 = this.physics.add.sprite(200, 200, 'rug1')
+    .setCollideWorldBounds(true)
+    .setDisplaySize(96, 72);
+  
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
     .setDisplaySize(96, 96);
