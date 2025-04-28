@@ -70,7 +70,7 @@ function create() {
 
   rug2 = this.physics.add.sprite(225, 200, 'rug2')
     .setCollideWorldBounds(true)
-    .setDisplaySize(142, 100);
+    .setDisplaySize(142, 85);
   
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
