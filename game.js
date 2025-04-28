@@ -68,9 +68,9 @@ function preload() {
 function create() {
   background = this.add.image(0, 0, 'background').setOrigin(0, 0).setDisplaySize(400, 400);
 
-  rug2 = this.physics.add.sprite(200, 200, 'rug2')
+  rug2 = this.physics.add.sprite(225, 200, 'rug2')
     .setCollideWorldBounds(true)
-    .setDisplaySize(112, 70);
+    .setDisplaySize(142, 100);
   
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
