@@ -116,7 +116,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(85, 95);
-  wall3.body.setSize(85, 35).setOffset(10, 30);
+  wall3.body.setSize(95, 30).setOffset(10, 30);
   this.physics.add.collider(player, wall3);
   
     const plant = this.physics.add.sprite(25, 250, 'plant')
