@@ -77,7 +77,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(100, 100);
-  laptop.body.setSize(100, 150);
+  laptop.body.setSize(100, 100);
   laptop.body.setOffset(0, 0);
   
   player = this.physics.add.sprite(200, 200, 'idle1')
