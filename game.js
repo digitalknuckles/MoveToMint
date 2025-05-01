@@ -81,6 +81,33 @@ function create() {
     .setDisplaySize(85, 75);
   laptop.body.setSize(60, 35);
   laptop.body.setOffset(0, 0);
+
+  goldy = this.physics.add.sprite(100, -120, 'goldy1')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(300, 300);
+  goldy.body.setSize(100, 100);
+  goldy.body.setOffset(0, 0);
+  
+ // this.physics.add.collider(player, goldy);
+  console.log(goldy.body);
+    this.anims.create({
+    key: 'goldy_anim',
+    frames: [
+      { key: 'goldy1' },
+      { key: 'goldy2' },
+      { key: 'goldy3' },
+      { key: 'goldy4' },
+      { key: 'goldy5' },
+      { key: 'goldy6' },
+      { key: 'goldy7' },
+      { key: 'goldy8' }
+    ],
+    frameRate: 5,
+    repeat: -1
+  });
+
+  goldy.anims.play('goldy_anim');
   
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
@@ -126,32 +153,7 @@ function create() {
   plant.body.setSize(25, 25).setOffset(10, 48);
   this.physics.add.collider(player, plant);
 
-  goldy = this.physics.add.sprite(100, -120, 'goldy1')
-    .setImmovable(true)
-    .setOrigin(0, 0)
-    .setDisplaySize(300, 300);
-  goldy.body.setSize(100, 100);
-  goldy.body.setOffset(0, 0);
-  
- // this.physics.add.collider(player, goldy);
-  console.log(goldy.body);
-    this.anims.create({
-    key: 'goldy_anim',
-    frames: [
-      { key: 'goldy1' },
-      { key: 'goldy2' },
-      { key: 'goldy3' },
-      { key: 'goldy4' },
-      { key: 'goldy5' },
-      { key: 'goldy6' },
-      { key: 'goldy7' },
-      { key: 'goldy8' }
-    ],
-    frameRate: 5,
-    repeat: -1
-  });
 
-  goldy.anims.play('goldy_anim');
   // ✅ Setup manual animation for Goldy
   //this.goldyFrames = ['goldy1', 'goldy2', 'goldy3', 'goldy4', 'goldy5', 'goldy6', 'goldy7', 'goldy8'];
   //this.goldyFrameIndex = 0;
