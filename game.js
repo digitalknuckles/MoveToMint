@@ -56,7 +56,7 @@ function preload() {
   this.load.image('wall2', 'wall2.png');
   this.load.image('plant', 'plant.png');
   this.load.image('rug2', 'rug2.png');
-  this.load.image('laptop', 'rug2.png');
+  this.load.image('laptop', 'LaptopDesk.png');
   
   const graphics = this.add.graphics();
   graphics.fillStyle(0x00ff00, 1).fillRect(0, 0, 16, 16); // Only green icon
@@ -72,6 +72,13 @@ function create() {
   rug2 = this.physics.add.sprite(225, 200, 'rug2')
     .setCollideWorldBounds(true)
     .setDisplaySize(142, 85);
+
+   laptop = this.physics.add.sprite(25, -120, 'laptop')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(300, 300);
+  laptop.body.setSize(100, 150);
+  laptop.body.setOffset(0, 0);
   
   player = this.physics.add.sprite(200, 200, 'idle1')
     .setCollideWorldBounds(true)
@@ -161,7 +168,8 @@ function create() {
   const safeSpawn = (x, y) => {
     const bedZone = new Phaser.Geom.Rectangle(bedProp.x, bedProp.y, bedProp.displayWidth, bedProp.displayHeight);
     const goldyZone = new Phaser.Geom.Rectangle(goldy.x, goldy.y, goldy.displayWidth, goldy.displayHeight);
-    return !bedZone.contains(x, y) && !goldyZone.contains(x, y);
+    const laptopZone = new Phaser.Geom.Rectangle(laptop.x, laptop.y, laptop.displayWidth, laptop.displayHeight);
+    return !bedZone.contains(x, y) && !goldyZone.contains(x, y)  && !laptopZone.contains(x, y);
   };
 
   // ✅ Spawn items in safe positions
