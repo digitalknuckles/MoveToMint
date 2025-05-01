@@ -24,6 +24,7 @@ let background;
 let collectedIcons = [];
 let targetPosition = null;
 let goldy; 
+let laptop; 
 const speed = 4 * 60;
 let collectedCount = 0;
 let lastDirection = 'idle';
