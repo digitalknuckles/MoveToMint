@@ -56,6 +56,7 @@ function preload() {
   this.load.image('wall2', 'wall2.png');
   this.load.image('plant', 'plant.png');
   this.load.image('rug2', 'rug2.png');
+  this.load.image('laptop', 'rug2.png');
   
   const graphics = this.add.graphics();
   graphics.fillStyle(0x00ff00, 1).fillRect(0, 0, 16, 16); // Only green icon
