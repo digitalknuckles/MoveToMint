@@ -79,7 +79,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(85, 75);
-  laptop.body.setSize(60, 40);
+  laptop.body.setSize(60, 35);
   laptop.body.setOffset(0, 0);
   
   player = this.physics.add.sprite(200, 200, 'idle1')
@@ -116,7 +116,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(85, 95);
-  wall3.body.setSize(95, 30).setOffset(10, 30);
+  wall3.body.setSize(100, 25).setOffset(10, 30);
   this.physics.add.collider(player, wall3);
   
     const plant = this.physics.add.sprite(25, 250, 'plant')
