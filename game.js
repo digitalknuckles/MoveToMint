@@ -75,7 +75,7 @@ function create() {
     .setCollideWorldBounds(true)
     .setDisplaySize(142, 85);
 
-   laptop = this.physics.add.sprite(25, 25, 'laptop1')
+   laptop = this.physics.add.sprite(25, 10, 'laptop1')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(100, 100);
@@ -116,7 +116,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(80, 100);
-  wall3.body.setSize(90, 25).setOffset(30, 40);
+  wall3.body.setSize(90, 25).setOffset(30, 30);
   this.physics.add.collider(player, wall3);
   
     const plant = this.physics.add.sprite(25, 250, 'plant')
