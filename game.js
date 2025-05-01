@@ -57,7 +57,7 @@ function preload() {
   this.load.image('wall2', 'wall2.png');
   this.load.image('plant', 'plant.png');
   this.load.image('rug2', 'rug2.png');
-  this.load.image('laptop', 'LaptopDesk.png');
+  this.load.image('laptop1', 'LaptopDesk.png');
   
   const graphics = this.add.graphics();
   graphics.fillStyle(0x00ff00, 1).fillRect(0, 0, 16, 16); // Only green icon
@@ -74,7 +74,7 @@ function create() {
     .setCollideWorldBounds(true)
     .setDisplaySize(142, 85);
 
-   laptop = this.physics.add.sprite(25, -120, 'laptop')
+   laptop = this.physics.add.sprite(25, -120, 'laptop1')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(100, 100);
