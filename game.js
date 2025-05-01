@@ -55,6 +55,7 @@ function preload() {
   this.load.image('BG_Bed', 'BG_Bed.png'); // ✅ New prop
   this.load.image('wall', 'wall.png');
   this.load.image('wall2', 'wall2.png');
+  this.load.image('wall3', 'wall2.png');
   this.load.image('plant', 'plant.png');
   this.load.image('rug2', 'rug2.png');
   this.load.image('laptop1', 'LaptopDesk.png');
@@ -74,7 +75,7 @@ function create() {
     .setCollideWorldBounds(true)
     .setDisplaySize(142, 85);
 
-   laptop = this.physics.add.sprite(25, -120, 'laptop1')
+   laptop = this.physics.add.sprite(25, -55, 'laptop1')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(100, 100);
@@ -111,6 +112,13 @@ function create() {
   wall2.body.setSize(90, 50).setOffset(30, 40);
   this.physics.add.collider(player, wall2);
 
+    const wall3 = this.physics.add.sprite(25, -55, 'wall2')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(80, 100);
+  wall3.body.setSize(90, 50).setOffset(30, 40);
+  this.physics.add.collider(player, wall3);
+  
     const plant = this.physics.add.sprite(25, 250, 'plant')
     .setImmovable(true)
     .setOrigin(0, 0)
