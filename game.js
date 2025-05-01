@@ -11,7 +11,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: true
     }
   }
 };
@@ -78,8 +78,8 @@ function create() {
    laptop = this.physics.add.sprite(50, 0, 'laptop1')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(100, 100);
-  laptop.body.setSize(60, 55);
+    .setDisplaySize(80, 70);
+  laptop.body.setSize(60, 40);
   laptop.body.setOffset(0, 0);
   
   player = this.physics.add.sprite(200, 200, 'idle1')
