@@ -81,6 +81,21 @@ function create() {
     .setDisplaySize(85, 75);
   laptop.body.setSize(60, 35);
   laptop.body.setOffset(0, 0);
+  
+  player = this.physics.add.sprite(200, 200, 'idle1')
+    .setCollideWorldBounds(true)
+    .setDisplaySize(96, 96);
+  player.body.setSize(20, 28).setOffset(16, 8);
+
+  // ✅ Add solid bed prop
+  bedProp = this.physics.add.sprite(32, 160, 'BG_Bed')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(120, 60); // Adjust to match image
+  bedProp.body.setSize(108, 48);
+  bedProp.body.setOffset(4, 18);
+
+  this.physics.add.collider(player, bedProp);
 
   // Optional: second decorative bed object
   const wall = this.physics.add.sprite(2, 2, 'wall')
@@ -94,7 +109,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(80, 100);
-  wall2.body.setSize(90, 25).setOffset(30, 40);
+  wall2.body.setSize(90, 50).setOffset(30, 40);
   this.physics.add.collider(player, wall2);
 
     const wall3 = this.physics.add.sprite(20, -50, 'wall2')
@@ -137,21 +152,6 @@ function create() {
   });
 
   goldy.anims.play('goldy_anim');
-  player = this.physics.add.sprite(200, 200, 'idle1')
-    .setCollideWorldBounds(true)
-    .setDisplaySize(96, 96);
-  player.body.setSize(20, 28).setOffset(16, 8);
-
-  // ✅ Add solid bed prop
-  bedProp = this.physics.add.sprite(32, 160, 'BG_Bed')
-    .setImmovable(true)
-    .setOrigin(0, 0)
-    .setDisplaySize(120, 60); // Adjust to match image
-  bedProp.body.setSize(108, 48);
-  bedProp.body.setOffset(4, 18);
-
-  this.physics.add.collider(player, bedProp);
-  
   // ✅ Setup manual animation for Goldy
   //this.goldyFrames = ['goldy1', 'goldy2', 'goldy3', 'goldy4', 'goldy5', 'goldy6', 'goldy7', 'goldy8'];
   //this.goldyFrameIndex = 0;
