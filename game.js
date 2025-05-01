@@ -75,11 +75,11 @@ function create() {
     .setCollideWorldBounds(true)
     .setDisplaySize(142, 85);
 
-   laptop = this.physics.add.sprite(25, 10, 'laptop1')
+   laptop = this.physics.add.sprite(25, 0, 'laptop1')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(100, 100);
-  laptop.body.setSize(100, 100);
+  laptop.body.setSize(80, 75);
   laptop.body.setOffset(0, 0);
   
   player = this.physics.add.sprite(200, 200, 'idle1')
