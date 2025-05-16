@@ -11,7 +11,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true
+      debug: false
     }
   }
 };
@@ -88,10 +88,10 @@ function create() {
   laptop.body.setSize(60, 35);
   laptop.body.setOffset(0, 0);
 
-  tenk1 = this.physics.add.sprite(50, 50, '10k1')
+  tenk1 = this.physics.add.sprite(36, 50, '10k1')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(48, 72);
+    .setDisplaySize(50, 72);
   tenk1.body.setSize(50, 50);
   tenk1.body.setOffset(0, 0);
 
@@ -182,7 +182,7 @@ function create() {
   plant.body.setSize(25, 25).setOffset(10, 48);
   this.physics.add.collider(player, plant);
 
-    const tenk = this.physics.add.sprite(64, 75, 'wall2')
+    const tenk = this.physics.add.sprite(50, 75, 'wall2')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(50, 50);
