@@ -90,8 +90,8 @@ function create() {
   tenk1 = this.physics.add.sprite(50, 100, '10k1')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(96, 96);
-  tenk1.body.setSize(100, 100);
+    .setDisplaySize(32, 64);
+  tenk1.body.setSize(50, 50);
   tenk1.body.setOffset(0, 0);
 
    // this.physics.add.collider(player, 10k1);
