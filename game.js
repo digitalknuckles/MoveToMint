@@ -90,7 +90,7 @@ function create() {
   tenk1 = this.physics.add.sprite(50, 100, '10k1')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(32, 64);
+    .setDisplaySize(48, 72);
   tenk1.body.setSize(50, 50);
   tenk1.body.setOffset(0, 0);
 
