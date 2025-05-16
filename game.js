@@ -11,7 +11,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: true
     }
   }
 };
@@ -181,12 +181,12 @@ function create() {
   plant.body.setSize(25, 25).setOffset(10, 48);
   this.physics.add.collider(player, plant);
 
-  //  const tenk1 = this.physics.add.sprite(25, 250, '')
-  //  .setImmovable(true)
-  //  .setOrigin(0, 0)
-  //  .setDisplaySize(59, 96);
-//  tenk1.body.setSize(25, 25).setOffset(10, 48);
-//  this.physics.add.collider(player, tenk1);
+    const tenk = this.physics.add.sprite(50, 100, 'wall2')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(48, 48);
+  tenk.body.setSize(25, 25).setOffset(0, 0);
+  this.physics.add.collider(player, tenk);
 
   // ✅ Setup manual animation for Goldy
   //this.goldyFrames = ['goldy1', 'goldy2', 'goldy3', 'goldy4', 'goldy5', 'goldy6', 'goldy7', 'goldy8'];
