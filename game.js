@@ -24,6 +24,7 @@ let background;
 let collectedIcons = [];
 let targetPosition = null;
 let tenk1;
+let tenk;
 let goldy; 
 let laptop; 
 const speed = 4 * 60;
