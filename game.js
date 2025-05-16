@@ -88,7 +88,7 @@ function create() {
   laptop.body.setSize(60, 35);
   laptop.body.setOffset(0, 0);
 
-  tenk1 = this.physics.add.sprite(50, 100, '10k1')
+  tenk1 = this.physics.add.sprite(50, 50, '10k1')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(48, 72);
@@ -182,7 +182,7 @@ function create() {
   plant.body.setSize(25, 25).setOffset(10, 48);
   this.physics.add.collider(player, plant);
 
-    const tenk = this.physics.add.sprite(64, 125, 'wall2')
+    const tenk = this.physics.add.sprite(64, 75, 'wall2')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(50, 50);
