@@ -181,11 +181,11 @@ function create() {
   plant.body.setSize(25, 25).setOffset(10, 48);
   this.physics.add.collider(player, plant);
 
-    const tenk = this.physics.add.sprite(50, 100, 'wall2')
+    const tenk = this.physics.add.sprite(64, 125, 'wall2')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(48, 48);
-  tenk.body.setSize(25, 25).setOffset(0, 0);
+    .setDisplaySize(50, 50);
+  tenk.body.setSize(36, 36).setOffset(0, 0);
   this.physics.add.collider(player, tenk);
 
   // ✅ Setup manual animation for Goldy
@@ -215,7 +215,7 @@ function create() {
     const goldyZone = new Phaser.Geom.Rectangle(goldy.x, goldy.y, goldy.displayWidth, goldy.displayHeight);
      const tenk1Zone = new Phaser.Geom.Rectangle(tenk1.x, tenk1.y, tenk1.displayWidth, tenk1.displayHeight);
     const laptopZone = new Phaser.Geom.Rectangle(laptop.x, laptop.y, laptop.displayWidth, laptop.displayHeight);
-    return !bedZone.contains(x, y) && !goldyZone.contains(x, y)  && !laptopZone.contains(x, y) && !tenk1Zone.contains(x, y);
+    return !bedZone.contains(x, y) && !goldyZone.contains(x, y)  && !laptopZone.contains(x, y) && !tenk1Zone.contains(x, y) && !tenkZone.contains(x, y);
   };
 
   // ✅ Spawn items in safe positions
