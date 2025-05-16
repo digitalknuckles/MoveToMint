@@ -215,6 +215,7 @@ function create() {
     const bedZone = new Phaser.Geom.Rectangle(bedProp.x, bedProp.y, bedProp.displayWidth, bedProp.displayHeight);
     const goldyZone = new Phaser.Geom.Rectangle(goldy.x, goldy.y, goldy.displayWidth, goldy.displayHeight);
      const tenk1Zone = new Phaser.Geom.Rectangle(tenk1.x, tenk1.y, tenk1.displayWidth, tenk1.displayHeight);
+    const tenkZone = new Phaser.Geom.Rectangle(tenk.x, tenk.y, tenk.displayWidth, tenk.displayHeight);
     const laptopZone = new Phaser.Geom.Rectangle(laptop.x, laptop.y, laptop.displayWidth, laptop.displayHeight);
     return !bedZone.contains(x, y) && !goldyZone.contains(x, y)  && !laptopZone.contains(x, y) && !tenk1Zone.contains(x, y) && !tenkZone.contains(x, y);
   };
