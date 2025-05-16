@@ -23,6 +23,7 @@ let items;
 let background;
 let collectedIcons = [];
 let targetPosition = null;
+let tenk1;
 let goldy; 
 let laptop; 
 const speed = 4 * 60;
@@ -33,6 +34,10 @@ let bedProp;
 
 function preload() {
   this.load.image('background', 'Background_Grey+.png');
+  this.load.image('10k1', '10k1.png');
+  this.load.image('10k2', '10k2.png');
+  this.load.image('10k3', '10k3.png');
+  this.load.image('10k4', '10k4.png');
   this.load.image('goldy1', 'goldy1.png');
   this.load.image('goldy2', 'goldy2.png');
   this.load.image('goldy3', 'goldy3.png');
@@ -81,6 +86,29 @@ function create() {
     .setDisplaySize(85, 75);
   laptop.body.setSize(60, 35);
   laptop.body.setOffset(0, 0);
+
+  tenk1 = this.physics.add.sprite(50, 100, '10k1')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(96, 96);
+  tenk1.body.setSize(100, 100);
+  tenk1.body.setOffset(0, 0);
+
+   // this.physics.add.collider(player, 10k1);
+  console.log(tenk1.body);
+    this.anims.create({
+    key: 'tenk1_anim',
+    frames: [
+      { key: '10k1' },
+      { key: '10k2' },
+      { key: '10k3' },
+      { key: '10k4' }
+    ],
+    frameRate: 5,
+    repeat: -1
+  });
+
+  tenk1.anims.play('tenk1_anim');
 
   goldy = this.physics.add.sprite(100, -120, 'goldy1')
     .setImmovable(true)
@@ -153,6 +181,12 @@ function create() {
   plant.body.setSize(25, 25).setOffset(10, 48);
   this.physics.add.collider(player, plant);
 
+  //  const tenk1 = this.physics.add.sprite(25, 250, '')
+  //  .setImmovable(true)
+  //  .setOrigin(0, 0)
+  //  .setDisplaySize(59, 96);
+//  tenk1.body.setSize(25, 25).setOffset(10, 48);
+//  this.physics.add.collider(player, tenk1);
 
   // ✅ Setup manual animation for Goldy
   //this.goldyFrames = ['goldy1', 'goldy2', 'goldy3', 'goldy4', 'goldy5', 'goldy6', 'goldy7', 'goldy8'];
@@ -179,8 +213,9 @@ function create() {
   const safeSpawn = (x, y) => {
     const bedZone = new Phaser.Geom.Rectangle(bedProp.x, bedProp.y, bedProp.displayWidth, bedProp.displayHeight);
     const goldyZone = new Phaser.Geom.Rectangle(goldy.x, goldy.y, goldy.displayWidth, goldy.displayHeight);
+     const tenk1Zone = new Phaser.Geom.Rectangle(tenk1.x, tenk1.y, tenk1.displayWidth, tenk1.displayHeight);
     const laptopZone = new Phaser.Geom.Rectangle(laptop.x, laptop.y, laptop.displayWidth, laptop.displayHeight);
-    return !bedZone.contains(x, y) && !goldyZone.contains(x, y)  && !laptopZone.contains(x, y);
+    return !bedZone.contains(x, y) && !goldyZone.contains(x, y)  && !laptopZone.contains(x, y) && !tenk1Zone.contains(x, y);
   };
 
   // ✅ Spawn items in safe positions
