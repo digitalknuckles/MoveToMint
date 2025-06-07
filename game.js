@@ -156,11 +156,11 @@ function create() {
 
   this.physics.add.collider(player, bedProp);
 
-  const whimp = this.physics.add.sprite(32, 200, 'whimp1')
+  const whimp = this.physics.add.sprite(64, 180, 'whimp1')
     .setImmovable(true)
     .setOrigin(0, 0)
-    .setDisplaySize(50, 50);
-  whimp.body.setSize(36, 36).setOffset(0, 0);
+    .setDisplaySize(36, 36);
+  whimp.body.setSize(32, 32).setOffset(0, 0);
   this.physics.add.collider(player, whimp);
   
     console.log(whimp.body);
