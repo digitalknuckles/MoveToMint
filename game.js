@@ -159,6 +159,13 @@ function create() {
 
   whimp.anims.play('whimp_anim');
 
+     const whimp = this.physics.add.sprite(32, 200, 'whimp1')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(50, 50);
+  whimp.body.setSize(36, 36).setOffset(0, 0);
+  this.physics.add.collider(player, whimp);
+
   // ✅ Add solid bed prop
   bedProp = this.physics.add.sprite(32, 160, 'BG_Bed')
     .setImmovable(true)
