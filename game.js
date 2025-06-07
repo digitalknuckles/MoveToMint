@@ -146,8 +146,17 @@ function create() {
     .setDisplaySize(96, 96);
   player.body.setSize(20, 28).setOffset(16, 8);
 
+  // ✅ Add solid bed prop
+  bedProp = this.physics.add.sprite(32, 160, 'BG_Bed')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(120, 60); // Adjust to match image
+  bedProp.body.setSize(108, 48);
+  bedProp.body.setOffset(4, 18);
 
-  const whimp = this.physics.add.sprite(32, 200, 'wall2')
+  this.physics.add.collider(player, bedProp);
+
+  const whimp = this.physics.add.sprite(32, 200, 'whimp1')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(50, 50);
@@ -166,17 +175,7 @@ function create() {
   });
 
   whimp.anims.play('whimp_anim');
-
-  // ✅ Add solid bed prop
-  bedProp = this.physics.add.sprite(32, 160, 'BG_Bed')
-    .setImmovable(true)
-    .setOrigin(0, 0)
-    .setDisplaySize(120, 60); // Adjust to match image
-  bedProp.body.setSize(108, 48);
-  bedProp.body.setOffset(4, 18);
-
-  this.physics.add.collider(player, bedProp);
-
+  
   // Optional: second decorative bed object
   const wall = this.physics.add.sprite(2, 2, 'wall')
     .setImmovable(true)
