@@ -157,7 +157,7 @@ function create() {
     repeat: -1
   });
 
-  whimp.anims.play('whimp1_anim');
+  whimp.anims.play('whimp_anim');
 
   // ✅ Add solid bed prop
   bedProp = this.physics.add.sprite(32, 160, 'BG_Bed')
@@ -204,6 +204,7 @@ function create() {
     .setDisplaySize(50, 50);
   tenk.body.setSize(36, 36).setOffset(0, 0);
   this.physics.add.collider(player, tenk);
+
 
   // ✅ Setup manual animation for Goldy
   //this.goldyFrames = ['goldy1', 'goldy2', 'goldy3', 'goldy4', 'goldy5', 'goldy6', 'goldy7', 'goldy8'];
