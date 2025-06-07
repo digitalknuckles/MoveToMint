@@ -11,7 +11,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: true
     }
   }
 };
@@ -160,7 +160,7 @@ function create() {
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(48, 48);
-  whimp.body.setSize(8, 8).setOffset(0, 0);
+  whimp.body.setSize(1, 1).setOffset(0, 0);
   this.physics.add.collider(player, whimp);
   
     console.log(whimp.body);
