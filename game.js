@@ -147,7 +147,7 @@ function create() {
   player.body.setSize(20, 28).setOffset(16, 8);
 
 
-  const whimp = this.physics.add.sprite(32, 200, 'whimp1')
+  const whimp = this.physics.add.sprite(32, 200, 'wall2')
     .setImmovable(true)
     .setOrigin(0, 0)
     .setDisplaySize(50, 50);
