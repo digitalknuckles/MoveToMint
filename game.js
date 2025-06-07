@@ -146,9 +146,17 @@ function create() {
     .setDisplaySize(96, 96);
   player.body.setSize(20, 28).setOffset(16, 8);
 
+
+  const whimp = this.physics.add.sprite(32, 200, 'whimp1')
+    .setImmovable(true)
+    .setOrigin(0, 0)
+    .setDisplaySize(50, 50);
+  whimp.body.setSize(36, 36).setOffset(0, 0);
+  this.physics.add.collider(player, whimp);
+  
     console.log(whimp.body);
     this.anims.create({
-    key: 'tenk1_anim',
+    key: 'whimp_anim',
     frames: [
       { key: 'whimp1' },
       { key: 'whimp2' }
@@ -158,13 +166,6 @@ function create() {
   });
 
   whimp.anims.play('whimp_anim');
-
-     const whimp = this.physics.add.sprite(32, 200, 'whimp1')
-    .setImmovable(true)
-    .setOrigin(0, 0)
-    .setDisplaySize(50, 50);
-  whimp.body.setSize(36, 36).setOffset(0, 0);
-  this.physics.add.collider(player, whimp);
 
   // ✅ Add solid bed prop
   bedProp = this.physics.add.sprite(32, 160, 'BG_Bed')
