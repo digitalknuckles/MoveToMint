@@ -32,6 +32,7 @@ let collectedCount = 0;
 let lastDirection = 'idle';
 let idleTimer = 0;
 let bedProp;
+let whimp;
 
 function preload() {
   this.load.image('background', 'Background_Grey+.png');
@@ -39,6 +40,8 @@ function preload() {
   this.load.image('10k2', '10k2.png');
   this.load.image('10k3', '10k3.png');
   this.load.image('10k4', '10k4.png');
+  this.load.image('whimp1', 'whimp1.png');
+  this.load.image('whimp2', 'whimp2.png');
   this.load.image('goldy1', 'goldy1.png');
   this.load.image('goldy2', 'goldy2.png');
   this.load.image('goldy3', 'goldy3.png');
@@ -142,6 +145,19 @@ function create() {
     .setCollideWorldBounds(true)
     .setDisplaySize(96, 96);
   player.body.setSize(20, 28).setOffset(16, 8);
+
+    console.log(whimp.body);
+    this.anims.create({
+    key: 'tenk1_anim',
+    frames: [
+      { key: 'whimp1' },
+      { key: 'whimp2' }
+    ],
+    frameRate: 5,
+    repeat: -1
+  });
+
+  whimp.anims.play('whimp1_anim');
 
   // ✅ Add solid bed prop
   bedProp = this.physics.add.sprite(32, 160, 'BG_Bed')
