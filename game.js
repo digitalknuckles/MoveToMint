@@ -1,3 +1,5 @@
+import RoomManager from './roomManager.js';
+
 const config = {
   type: Phaser.AUTO,
   width: 400,
