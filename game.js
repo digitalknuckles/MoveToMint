@@ -284,6 +284,9 @@ this.input.on('pointerdown', pointer => {
   targetPosition = new Phaser.Math.Vector2(pointer.x, pointer.y);
 });
 
+player = this.physics.add.sprite(...);
+this.events.emit('player-ready');
+
 function update(time, delta) {
   player.setVelocity(0);
 
