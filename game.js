@@ -34,7 +34,6 @@ let collectedCount = 0;
 let lastDirection = 'idle';
 let idleTimer = 0;
 let bedProp;
-let rug2;
 let whimp;
 
 function preload() {
