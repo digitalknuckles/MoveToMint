@@ -236,6 +236,18 @@ function create() {
 
   player.anims.play('idle');
 
+    // After player setup
+  this.roomManager = new RoomManager(this);
+  this.roomManager.addRoom('room1', [
+    { x: 2, y: 2, key: 'wall', width: 24, height: 400, bodySize: { width: 32, height: 400 }, bodyOffset: { x: 12, y: 0 } },
+    { x: 180, y: -55, key: 'wall2', width: 80, height: 100, bodySize: { width: 90, height: 20 }, bodyOffset: { x: 30, y: 40 } },
+    { x: 20, y: -50, key: 'wall2', width: 85, height: 95, bodySize: { width: 100, height: 25 }, bodyOffset: { x: 10, y: 30 } },
+    { x: 25, y: 250, key: 'plant', width: 59, height: 96, bodySize: { width: 25, height: 25 }, bodyOffset: { x: 10, y: 48 } }
+  ]);
+  
+  // Load initial room
+  this.roomManager.loadRoom('room1');
+
   // ✅ Function to avoid bedProp area when spawning items
   const safeSpawn = (x, y) => {
     const bedZone = new Phaser.Geom.Rectangle(bedProp.x, bedProp.y, bedProp.displayWidth, bedProp.displayHeight);
