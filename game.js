@@ -275,6 +275,8 @@ this.roomManager.addRoom('room1', [
   { x: 25, y: 250, key: 'plant', width: 59, height: 96, bodySize: { width: 25, height: 25 }, bodyOffset: { x: 10, y: 48 } }
 ]);
 
+this.roomManager = new RoomManager(this);
+this.roomManager.addRoom('room1', [...]);
 this.roomManager.loadRoom('room1');
 
 // Pointerdown just for movement
