@@ -41,13 +41,15 @@ export default class RoomManager {
         sprite.body.setOffset(prop.bodyOffset.x, prop.bodyOffset.y);
       }
 
-      // Add collider with player if player exists
       if (this.scene.player && this.scene.player.body) {
         this.scene.physics.add.collider(this.scene.player, sprite);
       } else {
-        console.warn('RoomManager: player not ready for collider');
+        // Defer collider setup until player is ready
+        this.scene.events.once('player-ready', () => {
+          this.scene.physics.add.collider(this.scene.player, sprite);
+        });
       }
-
+    
       this.currentRoom.props.push(sprite);
     });
   }
