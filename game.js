@@ -83,9 +83,9 @@ function preload() {
 function create() {
   background = this.add.image(0, 0, 'background').setOrigin(0, 0).setDisplaySize(400, 400);
 
-  rug2 = this.physics.add.sprite(225, 200, 'rug2')
-    .setCollideWorldBounds(false)
-    .setDisplaySize(142, 85);
+const rug2 = this.physics.add.sprite(225, 200, 'rug2')
+  .setCollideWorldBounds(true)
+  .setDisplaySize(142, 85);
 
    laptop = this.physics.add.sprite(50, 0, 'laptop1')
     .setImmovable(true)
