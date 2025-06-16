@@ -49,5 +49,6 @@ export default class RoomManager {
     }
 
     this.currentRoom.props.push(sprite);
-  });
+    });
+  }
 }
