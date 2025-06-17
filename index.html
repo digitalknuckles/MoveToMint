@@ -19,11 +19,13 @@
 </head>
 <body>
 
-<div id="game-container" style="position: relative; width: 400px; height: 400px; overflow: visible;">
-  <canvas></canvas> <!-- Phaser inserts this -->
-  <img id="gameboy-frame" src="frame.png"
-       style="position: absolute; top: 0px; left: 0px; width: 1000px; height: 1000px; pointer-events: none;">
-</div>
+<body style="margin: 0; overflow: hidden;">
+  <div id="game-container" style="position: relative; width: 100%; height: 100%;">
+    <script src="game.js"></script>
+    <img src="frame.png" 
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10;">
+  </div>
+</body>
   <!-- Load Phaser -->
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
 
