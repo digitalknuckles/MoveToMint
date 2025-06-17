@@ -10,36 +10,46 @@
       padding: 0;
       overflow: hidden;
       background: #000;
+      width: 100%;
+      height: 100%;
+    }
+    #game-container {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
     canvas {
       display: block;
-      margin: 0 auto;
     }
   </style>
 </head>
 <body>
 
-<div id="game-container" style="position: relative; width: 400px; height: 400px; margin: auto;">
+<div id="game-container">
   <canvas></canvas>
 </div>
 
 <img src="your-frame.png" 
      style="position: fixed; top: 50%; left: 50%; width: 1000px; height: 1000px; transform: translate(-50%, -50%); pointer-events: none; z-index: 999;">
-  <!-- Load Phaser -->
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
 
-  <!-- Load WalletConnect -->
-  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.6.6/dist/umd/index.min.js"></script>
+<!-- Load Phaser -->
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
 
-  <!-- Load ethers.js UMD (for browser global use) -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<!-- Load WalletConnect -->
+<script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.6.6/dist/umd/index.min.js"></script>
 
-  <!-- Load Web3Modal -->
-  <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.7/dist/index.min.js"></script>
+<!-- Load ethers.js UMD (for browser global use) -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 
-  <!-- Load custom game and wallet connection logic -->
-  <script src="walletconnect.js"></script>
-  <!--<script src="game.js"></script> -->
-  <script type="module" src="game.js"></script>
+<!-- Load Web3Modal -->
+<script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.7/dist/index.min.js"></script>
+
+<!-- Load custom game and wallet connection logic -->
+<script src="walletconnect.js"></script>
+<script type="module" src="game.js"></script>
+
 </body>
 </html>
