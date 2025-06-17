@@ -10,16 +10,42 @@
       padding: 0;
       overflow: hidden;
       background: #000;
+      height: 100%;
+      width: 100%;
+    }
+    #game-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(80vw, 400px);
+      height: min(80vw, 400px);
+      transform: translate(-50%, -50%);
     }
     canvas {
       display: block;
-      margin: 0 auto;
+      width: 100%;
+      height: 100%;
+    }
+    #frame {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 100vw;
+      max-width: 1000px;
+      max-height: 1000px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 999;
     }
   </style>
 </head>
 <body>
- <img src="frame.png" 
-     style="position: fixed; top: 63%; left: 50%; width: 1000px; height: 1000px; transform: translate(-50%, -50%); pointer-events: none; z-index: 999;">
+
+  <div id="game-container"></div>
+
+  <img id="frame" src="frame.png" alt="Game Frame">
+
   <!-- Load Phaser -->
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
 
@@ -34,7 +60,7 @@
 
   <!-- Load custom game and wallet connection logic -->
   <script src="walletconnect.js"></script>
-  <!--<script src="game.js"></script> -->
   <script type="module" src="game.js"></script>
+
 </body>
 </html>
