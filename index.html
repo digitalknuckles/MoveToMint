@@ -10,21 +10,23 @@
       padding: 0;
       overflow: hidden;
       background: #000;
+      width: 100%;
+      height: 100%;
     }
     canvas {
       display: block;
-      margin: 0 auto;
     }
   </style>
 </head>
 <body>
 
-<div id="game-container" style="position: relative; width: 400px; height: 400px; margin: auto;">
+<div id="game-container" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 400px; height: 400px;">
   <canvas></canvas>
 </div>
 
 <img src="frame.png" 
      style="position: fixed; top: 50%; left: 50%; width: 1000px; height: 1000px; transform: translate(-50%, -50%); pointer-events: none; z-index: 999;">
+
   <!-- Load Phaser -->
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
 
