@@ -147,6 +147,7 @@ const rug2 = this.physics.add.sprite(225, 200, 'rug2')
     .setCollideWorldBounds(true)
     .setDisplaySize(96, 96);
   player.body.setSize(20, 28).setOffset(16, 8);
+  this.events.emit('player-ready');
 
   // ✅ Add solid bed prop
   bedProp = this.physics.add.sprite(32, 160, 'BG_Bed')
@@ -259,31 +260,22 @@ const rug2 = this.physics.add.sprite(225, 200, 'rug2')
     }
     attempts++;
   }
-
+  // Init RoomManager
+  this.roomManager = new RoomManager(this);
+  this.roomManager.addRoom('room1', [
+    { x: 2, y: 2, key: 'wall', width: 24, height: 400, bodySize: { width: 32, height: 400 }, bodyOffset: { x: 12, y: 0 } },
+    { x: 180, y: -55, key: 'wall2', width: 80, height: 100, bodySize: { width: 90, height: 20 }, bodyOffset: { x: 30, y: 40 } },
+    { x: 20, y: -50, key: 'wall2', width: 85, height: 95, bodySize: { width: 100, height: 25 }, bodyOffset: { x: 10, y: 30 } },
+    { x: 25, y: 250, key: 'plant', width: 59, height: 96, bodySize: { width: 25, height: 25 }, bodyOffset: { x: 10, y: 48 } }
+  ]);
+  
+  this.roomManager.loadRoom('room1');
   this.physics.add.overlap(player, items, collectItem, null, this);
 
   this.input.on('pointerdown', pointer => {
     targetPosition = new Phaser.Math.Vector2(pointer.x, pointer.y);
   });
 }
-// Init RoomManager
-this.roomManager = new RoomManager(this);
-this.roomManager.addRoom('room1', [
-  { x: 2, y: 2, key: 'wall', width: 24, height: 400, bodySize: { width: 32, height: 400 }, bodyOffset: { x: 12, y: 0 } },
-  { x: 180, y: -55, key: 'wall2', width: 80, height: 100, bodySize: { width: 90, height: 20 }, bodyOffset: { x: 30, y: 40 } },
-  { x: 20, y: -50, key: 'wall2', width: 85, height: 95, bodySize: { width: 100, height: 25 }, bodyOffset: { x: 10, y: 30 } },
-  { x: 25, y: 250, key: 'plant', width: 59, height: 96, bodySize: { width: 25, height: 25 }, bodyOffset: { x: 10, y: 48 } }
-]);
-
-this.roomManager.loadRoom('room1');
-
-// Pointerdown just for movement
-this.input.on('pointerdown', pointer => {
-  targetPosition = new Phaser.Math.Vector2(pointer.x, pointer.y);
-});
-
-player = this.physics.add.sprite(...);
-this.events.emit('player-ready');
 
 function update(time, delta) {
   player.setVelocity(0);
