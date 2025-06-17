@@ -19,13 +19,12 @@
 </head>
 <body>
 
-<body style="margin: 0; overflow: hidden;">
-  <div id="game-container" style="position: relative; width: 100%; height: 100%;">
-    <script src="game.js"></script>
-    <img src="frame.png" 
-          style="position: absolute; top: -300px; left: -300px; width: 1000px; height: 1000px; pointer-events: none;">
-  </div>
-</body>
+<div id="game-container" style="position: relative; width: 400px; height: 400px; margin: auto;">
+  <canvas></canvas>
+</div>
+
+<img src="your-frame.png" 
+     style="position: fixed; top: 50%; left: 50%; width: 1000px; height: 1000px; transform: translate(-50%, -50%); pointer-events: none; z-index: 999;">
   <!-- Load Phaser -->
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.85.2/dist/phaser.js"></script>
 
